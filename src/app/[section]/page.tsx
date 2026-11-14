@@ -1,0 +1,65 @@
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import { CareerInsights } from "@/components/career-insights";
+import { WorkbookProjects } from "@/components/workbook-projects";
+import { researchHref, projectHref } from "@/lib/data";
+import { navigation } from "@/lib/navigation";
+
+// Keep the existing routes; only Profile remains a placeholder.
+export function generateStaticParams() {
+  return navigation
+    .filter((item) => item.href !== "/")
+    .map((item) => ({ section: item.href.slice(1) }));
+}
+
+export default async function PlaceholderPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ section: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const { section } = await params;
+  const item = navigation.find((item) => item.href === `/${section}`);
+  if (!item) notFound();
+  if (section === "career-insights" || section === "my-projects") {
+    const query = await searchParams;
+    const value = (key: string) =>
+      typeof query[key] === "string" ? (query[key] as string) : undefined;
+    if (section === "career-insights") {
+      // Keep previously shared exploration URLs working after the route refinement.
+      if (value("internship"))
+        redirect(
+          researchHref({
+            internshipId: value("internship"),
+            careerField: value("field"),
+            skillId: value("skill"),
+          }),
+        );
+      return (
+        <CareerInsights careerField={value("field")} skillId={value("skill")} />
+      );
+    }
+    if (value("project")) redirect(projectHref(value("project")!));
+    return <WorkbookProjects internshipId={value("internship")} />;
+  }
+  return (
+    <div className="page-content">
+      <header className="page-heading">
+        <h1>{item.label}</h1>
+      </header>
+      <section className="placeholder-panel">
+        <h2>This section is in preparation.</h2>
+        <p>
+          {item.label} is a placeholder in this foundation edition. Its tools
+          will be introduced in a later milestone.
+        </p>
+        <Link href="/" className="button">
+          <ArrowLeft size={16} />
+          Back to dashboard
+        </Link>
+      </section>
+    </div>
+  );
+}

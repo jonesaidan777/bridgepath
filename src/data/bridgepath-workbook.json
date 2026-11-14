@@ -1,0 +1,431 @@
+{
+  "metadata": {
+    "source": "BridgePath_Data.xlsx",
+    "source_sha256": "b035f40e2bbd54c39646ccd80ba376a3656779d5411fec8315e76dc543e15ef6",
+    "imported_at": "2026-11-14T17:19:42.201717+00:00",
+    "record_counts": {
+      "Internships": 6,
+      "Requirements": 30,
+      "Skills": 24,
+      "Projects": 3,
+      "Milestones": 4
+    },
+    "warnings": []
+  },
+  "Internships": [
+    {
+      "internship_id": "INT-001",
+      "company": "CrowdStrike",
+      "job_title": "Intelligence Intern - Summer 2027",
+      "job_description_summary": "Interns on CrowdStrike's Intel Automation team pick a project in data science/AI, platform engineering, software engineering, or security research (binary analysis, vulnerability research, threat intelligence). They help build and run the systems behind the intelligence pipeline, including AI-assisted workflows with verification and monitoring. The posting asks for a penultimate-year CS/Engineering/Math student with Python, Go, Rust or JavaScript/TypeScript, Linux, git and CI/CD experience, plus demonstrated use of AI agents.",
+      "career_field": "cybersecurity",
+      "location": "USA - Arlington, VA (hybrid)",
+      "employer_posting_url": "https://crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers/job/USA---Arlington-VA/Intelligence-Intern---Summer-2027_R30605",
+      "retrieved_on": "2026-11-14",
+      "posting_status": "open"
+    },
+    {
+      "internship_id": "INT-002",
+      "company": "CrowdStrike",
+      "job_title": "Intelligence Launch Intern - Summer 2027",
+      "job_description_summary": "Interns join CrowdStrike's Counter Adversary Operations automation team to build AI agents and automated workflows that help Elite analysts investigate threats. Day to day they write and test Python integrations using REST APIs and JSON, evaluate agents for accuracy, and shadow analysts. It is a Launch program role for first- or second-year students in Computer Science, Cyber Security or a similar degree.",
+      "career_field": "cybersecurity",
+      "location": "UK - Reading (hybrid)",
+      "employer_posting_url": "https://crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers/job/United-Kingdom---Reading/Intelligence-Launch-Intern---Summer-2027_R30500",
+      "retrieved_on": "2026-11-14",
+      "posting_status": "unknown"
+    },
+    {
+      "internship_id": "INT-003",
+      "company": "Rubrik",
+      "job_title": "Product Management Intern (MSP), Summer 2027",
+      "job_description_summary": "The intern joins the Managed Service Provider product team at Rubrik, a cyber resilience and data security company, reporting to the Director of Product Management, Platform. They analyze MSP workflows and competitors, write problem statements and PRDs, and validate ideas with MSP customers and engineering. Candidates should be MBA or Master's students finishing Dec 2027 or Spring 2028 who are comfortable with system architecture, APIs and cloud infrastructure.",
+      "career_field": "cybersecurity",
+      "location": "Palo Alto, CA",
+      "employer_posting_url": "https://www.rubrik.com/company/careers/departments/job.8346967",
+      "retrieved_on": "2026-11-14",
+      "posting_status": "open"
+    },
+    {
+      "internship_id": "INT-004",
+      "company": "Rubrik",
+      "job_title": "Product Management Intern (RCV), Summer 2027",
+      "job_description_summary": "The intern supports the Rubrik Cloud Vault team, which protects customers' critical application data for recovery during cyber and disaster incidents. They analyze customer use cases and the market, write PRDs, and work with engineering, design and go-to-market teams. Candidates should be Master's or MBA students finishing Dec 2027 or Spring 2028 with exposure to technical systems, cloud infrastructure and APIs.",
+      "career_field": "cybersecurity",
+      "location": "Palo Alto, CA",
+      "employer_posting_url": "https://www.rubrik.com/company/careers/departments/job.8350601",
+      "retrieved_on": "2026-11-14",
+      "posting_status": "open"
+    },
+    {
+      "internship_id": "INT-005",
+      "company": "Horizon3.ai",
+      "job_title": "Research Intern, Adversarial Intelligence",
+      "job_description_summary": "The intern works on a defined research project at the intersection of AI, cybersecurity and computer systems at Horizon3 (autonomous pentesting). They read papers, build prototypes, run experiments, and work with security data such as attack paths, telemetry and cloud environments alongside researchers and attack engineers. The posting asks for a CS or related student with strong fundamentals and interest in systems security or machine learning.",
+      "career_field": "cybersecurity",
+      "location": "Chicago, IL; West Lafayette, IN",
+      "employer_posting_url": "https://jobs.ashbyhq.com/horizon3ai/818f854b-f212-4817-8227-3b9e654d39a2",
+      "retrieved_on": "2026-11-14",
+      "posting_status": "open"
+    },
+    {
+      "internship_id": "INT-006",
+      "company": "Lawrence Livermore National Laboratory (LLNL)",
+      "job_title": "Critical Infrastructure Analysis Graduate Intern - Cyber and Critical Infrastructure Summer Institute - Summer 2027",
+      "job_description_summary": "Graduate interns in LLNL's Cyber and Critical Infrastructure Summer Institute support research on critical infrastructure security and resilience, including analysis, modeling, simulation and cybersecurity, working with scientists and engineers. Assigned areas include risk analysis, threat modeling, data analysis and machine learning. Candidates must be continuing graduate students and U.S. persons, with on-site, full-time work.",
+      "career_field": "cybersecurity",
+      "location": "Livermore, CA",
+      "employer_posting_url": "https://jobs.smartrecruiters.com/LLNL/3743990016610216",
+      "retrieved_on": "2026-11-14",
+      "posting_status": "unknown"
+    }
+  ],
+  "Requirements": [
+    {
+      "internship_id": "INT-001",
+      "skill_id": "python",
+      "requirement_type": "required",
+      "evidence_excerpt": "Solid knowledge and experience in at least one of: Python Go, Rust, JavaScript/ TypeScript"
+    },
+    {
+      "internship_id": "INT-001",
+      "skill_id": "linux",
+      "requirement_type": "required",
+      "evidence_excerpt": "Comfortable working in a Linux environment, with git and modern CI/CD"
+    },
+    {
+      "internship_id": "INT-001",
+      "skill_id": "git",
+      "requirement_type": "required",
+      "evidence_excerpt": "Comfortable working in a Linux environment, with git and modern CI/CD"
+    },
+    {
+      "internship_id": "INT-001",
+      "skill_id": "ci_cd",
+      "requirement_type": "required",
+      "evidence_excerpt": "Comfortable working in a Linux environment, with git and modern CI/CD"
+    },
+    {
+      "internship_id": "INT-001",
+      "skill_id": "binary_analysis",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Security Research: binary analysis, vulnerability research and threat intelligence"
+    },
+    {
+      "internship_id": "INT-001",
+      "skill_id": "vulnerability_research",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Security Research: binary analysis, vulnerability research and threat intelligence"
+    },
+    {
+      "internship_id": "INT-001",
+      "skill_id": "threat_intelligence",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Security Research: binary analysis, vulnerability research and threat intelligence"
+    },
+    {
+      "internship_id": "INT-001",
+      "skill_id": "containerization",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "operating containerized workloads and CI/CD pipelines"
+    },
+    {
+      "internship_id": "INT-002",
+      "skill_id": "python",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Write and test Python scripts and simple integrations that connect the Falcon platform with other tools using REST APIs and JSON data."
+    },
+    {
+      "internship_id": "INT-002",
+      "skill_id": "rest_apis",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Write and test Python scripts and simple integrations that connect the Falcon platform with other tools using REST APIs and JSON data."
+    },
+    {
+      "internship_id": "INT-002",
+      "skill_id": "json",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Write and test Python scripts and simple integrations that connect the Falcon platform with other tools using REST APIs and JSON data."
+    },
+    {
+      "internship_id": "INT-002",
+      "skill_id": "soar",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "using tools such as Charlotte AI and Falcon Fusion SOAR"
+    },
+    {
+      "internship_id": "INT-002",
+      "skill_id": "security_automation",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "help design and build AI agents and automated workflows that support threat investigations"
+    },
+    {
+      "internship_id": "INT-003",
+      "skill_id": "cloud_infrastructure",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Experience analyzing complex technical systems, enterprise software, or cloud infrastructure through coursework, internships, research, or prior work experience."
+    },
+    {
+      "internship_id": "INT-003",
+      "skill_id": "api_design",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Comfortable engaging in technical discussions around system architecture, multi-tenancy models, APIs, and platform design; programming experience is a bonus."
+    },
+    {
+      "internship_id": "INT-003",
+      "skill_id": "system_architecture",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Comfortable engaging in technical discussions around system architecture, multi-tenancy models, APIs, and platform design; programming experience is a bonus."
+    },
+    {
+      "internship_id": "INT-004",
+      "skill_id": "cloud_infrastructure",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Experience analyzing complex technical systems, enterprise software, or cloud infrastructure through coursework, internships, research, or prior work experience."
+    },
+    {
+      "internship_id": "INT-004",
+      "skill_id": "api_design",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Comfortable engaging in technical discussions around system architecture, multi-tenancy models, APIs, and platform design; programming experience is a bonus."
+    },
+    {
+      "internship_id": "INT-004",
+      "skill_id": "system_architecture",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Comfortable engaging in technical discussions around system architecture, multi-tenancy models, APIs, and platform design; programming experience is a bonus."
+    },
+    {
+      "internship_id": "INT-005",
+      "skill_id": "systems_security",
+      "requirement_type": "required",
+      "evidence_excerpt": "Experience or demonstrated interest in systems security, super intelligence / machine learning, computer systems, or a closely related area."
+    },
+    {
+      "internship_id": "INT-005",
+      "skill_id": "machine_learning",
+      "requirement_type": "preferred",
+      "evidence_excerpt": "Experience with machine learning, deep learning, large language models, AI agents, reinforcement learning"
+    },
+    {
+      "internship_id": "INT-005",
+      "skill_id": "penetration_testing",
+      "requirement_type": "preferred",
+      "evidence_excerpt": "Experience in systems security, offensive security, defensive security, penetration testing, vulnerability research, operating systems, networks, cloud security, identity systems, or related areas."
+    },
+    {
+      "internship_id": "INT-005",
+      "skill_id": "vulnerability_research",
+      "requirement_type": "preferred",
+      "evidence_excerpt": "Experience in systems security, offensive security, defensive security, penetration testing, vulnerability research, operating systems, networks, cloud security, identity systems, or related areas."
+    },
+    {
+      "internship_id": "INT-005",
+      "skill_id": "cloud_security",
+      "requirement_type": "preferred",
+      "evidence_excerpt": "Experience in systems security, offensive security, defensive security, penetration testing, vulnerability research, operating systems, networks, cloud security, identity systems, or related areas."
+    },
+    {
+      "internship_id": "INT-005",
+      "skill_id": "attack_path_analysis",
+      "requirement_type": "unspecified",
+      "evidence_excerpt": "Work with security data and environments that may include attack paths, graphs, telemetry, configurations, identities, networks, cloud systems, or security controls."
+    },
+    {
+      "internship_id": "INT-006",
+      "skill_id": "machine_learning",
+      "requirement_type": "required",
+      "evidence_excerpt": "machine learning and super intelligence"
+    },
+    {
+      "internship_id": "INT-006",
+      "skill_id": "risk_analysis",
+      "requirement_type": "required",
+      "evidence_excerpt": "risk and/or decision analysis"
+    },
+    {
+      "internship_id": "INT-006",
+      "skill_id": "threat_modeling",
+      "requirement_type": "required",
+      "evidence_excerpt": "threat and/or hazard modeling"
+    },
+    {
+      "internship_id": "INT-006",
+      "skill_id": "data_analysis",
+      "requirement_type": "required",
+      "evidence_excerpt": "data analysis"
+    },
+    {
+      "internship_id": "INT-006",
+      "skill_id": "infrastructure_modeling",
+      "requirement_type": "required",
+      "evidence_excerpt": "infrastructure modeling and/or simulation"
+    }
+  ],
+  "Skills": [
+    {
+      "skill_id": "python",
+      "skill_name": "Python"
+    },
+    {
+      "skill_id": "linux",
+      "skill_name": "Linux"
+    },
+    {
+      "skill_id": "git",
+      "skill_name": "Git"
+    },
+    {
+      "skill_id": "ci_cd",
+      "skill_name": "CI/CD"
+    },
+    {
+      "skill_id": "binary_analysis",
+      "skill_name": "Binary analysis"
+    },
+    {
+      "skill_id": "vulnerability_research",
+      "skill_name": "Vulnerability research"
+    },
+    {
+      "skill_id": "threat_intelligence",
+      "skill_name": "Threat intelligence"
+    },
+    {
+      "skill_id": "containerization",
+      "skill_name": "Containerization"
+    },
+    {
+      "skill_id": "rest_apis",
+      "skill_name": "REST APIs"
+    },
+    {
+      "skill_id": "json",
+      "skill_name": "JSON"
+    },
+    {
+      "skill_id": "soar",
+      "skill_name": "SOAR (security orchestration, automation and response)"
+    },
+    {
+      "skill_id": "security_automation",
+      "skill_name": "Security automation"
+    },
+    {
+      "skill_id": "cloud_infrastructure",
+      "skill_name": "Cloud infrastructure"
+    },
+    {
+      "skill_id": "api_design",
+      "skill_name": "APIs and platform design"
+    },
+    {
+      "skill_id": "system_architecture",
+      "skill_name": "System architecture"
+    },
+    {
+      "skill_id": "machine_learning",
+      "skill_name": "Machine learning"
+    },
+    {
+      "skill_id": "systems_security",
+      "skill_name": "Systems security"
+    },
+    {
+      "skill_id": "penetration_testing",
+      "skill_name": "Penetration testing"
+    },
+    {
+      "skill_id": "cloud_security",
+      "skill_name": "Cloud security"
+    },
+    {
+      "skill_id": "attack_path_analysis",
+      "skill_name": "Attack path analysis"
+    },
+    {
+      "skill_id": "risk_analysis",
+      "skill_name": "Risk and decision analysis"
+    },
+    {
+      "skill_id": "threat_modeling",
+      "skill_name": "Threat modeling"
+    },
+    {
+      "skill_id": "data_analysis",
+      "skill_name": "Data analysis"
+    },
+    {
+      "skill_id": "infrastructure_modeling",
+      "skill_name": "Infrastructure modeling and simulation"
+    }
+  ],
+  "Projects": [
+    {
+      "project_id": "PRJ-001",
+      "career_field": "cybersecurity",
+      "title": "Python Security Log Analyzer",
+      "description": "Build a command-line tool that parses simulated authentication logs (JSON lines), flags brute-force and password-spray patterns, and enriches suspicious IPs from a simulated threat-intel feed. Practiced in the style of a security analyst's investigation support work.",
+      "target_skill_ids": "python|json|linux|git|threat_intelligence",
+      "final_deliverable": "A GitHub-ready repository with the analyzer script, simulated log generator, sample findings report, and README."
+    },
+    {
+      "project_id": "PRJ-002",
+      "career_field": "cybersecurity",
+      "title": "Mini SOAR Alert Triage Playbook",
+      "description": "Build an automated triage workflow that pulls alerts as JSON from a mock REST API, enriches and scores them, and routes them to close, escalate or investigate, mirroring analyst automation work.",
+      "target_skill_ids": "python|rest_apis|json|security_automation|soar",
+      "final_deliverable": "A repository with the playbook code, mock alert API, test cases, and a short write-up of triage rules and accuracy."
+    },
+    {
+      "project_id": "PRJ-003",
+      "career_field": "cybersecurity",
+      "title": "Cloud Attack Path Mapper",
+      "description": "Model a simulated cloud environment (identities, roles, network rules) as a graph, find attack paths to critical assets, and rank them by risk with suggested control fixes.",
+      "target_skill_ids": "attack_path_analysis|cloud_security|threat_modeling|risk_analysis",
+      "final_deliverable": "A report and repository with the environment model, path-finding script, risk-ranked findings, and an attack path diagram."
+    }
+  ],
+  "Milestones": [
+    {
+      "milestone_id": "MS-001",
+      "project_id": "PRJ-001",
+      "step_number": 1,
+      "title": "Explore and simulate the authentication data",
+      "instructions": "Write a script that generates about 5,000 simulated login events as JSON lines (timestamp, user, source_ip, result, method) including a few planted attacks: one brute-force burst, one password-spray, and one login from a rare IP. Load the file, count events by user, IP and result, and note what normal traffic looks like.",
+      "deliverable": "data/auth_logs.jsonl, generator script, and a short notes file listing baseline statistics",
+      "resource_title": "Python docs: json - JSON encoder and decoder",
+      "resource_url": "https://docs.python.org/3/library/json.html"
+    },
+    {
+      "milestone_id": "MS-002",
+      "project_id": "PRJ-001",
+      "step_number": 2,
+      "title": "Build the analyzer",
+      "instructions": "Create analyzer.py with a command-line interface that reads a log file and applies detection rules: N failed logins from one IP in a time window, one IP failing against many users, and success after many failures. Print findings as JSON. Run and test it on Linux or WSL.",
+      "deliverable": "analyzer.py with CLI flags and at least three detection rules",
+      "resource_title": "Python docs: argparse - Parser for command-line options",
+      "resource_url": "https://docs.python.org/3/library/argparse.html"
+    },
+    {
+      "milestone_id": "MS-003",
+      "project_id": "PRJ-001",
+      "step_number": 3,
+      "title": "Investigate the findings",
+      "instructions": "For each finding, build a short timeline, enrich the source IP against a simulated threat-intel list, and map the behavior to a known technique. Write a one-paragraph verdict and recommended response per finding.",
+      "deliverable": "findings_report.md with timelines, enrichment results, and recommended actions",
+      "resource_title": "MITRE ATT&CK: Brute Force (T1110)",
+      "resource_url": "https://attack.mitre.org/techniques/T1110/"
+    },
+    {
+      "milestone_id": "MS-004",
+      "project_id": "PRJ-001",
+      "step_number": 4,
+      "title": "Publish a GitHub-ready deliverable",
+      "instructions": "Clean the code, add a README (purpose, install, usage, sample output, detection rules, limitations), add a .gitignore, make small descriptive commits, and push to a public repository.",
+      "deliverable": "Public GitHub repository link with README, code, sample data, and report",
+      "resource_title": "GitHub Docs: About the repository README file",
+      "resource_url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"
+    }
+  ]
+}
