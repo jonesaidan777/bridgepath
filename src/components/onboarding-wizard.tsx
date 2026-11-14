@@ -36,49 +36,104 @@ const stageTitles = [
   "About you",
   "Education",
   "Experience & skills",
-  "Preferences",
 ];
 const stageDescriptions = [
   "Review your resume locally, or continue without one.",
   "Start with your interests and where you are today.",
   "BridgePath is for currently enrolled college students seeking internships.",
   "Experience can come from work, research, activities, or projects. Starting without formal work experience is welcome.",
-  "Choose the internships you want to explore.",
 ];
 
 // Demo defaults are separate from resume review: no document extraction is claimed.
 // Fill only empty inputs so saved student entries are never replaced.
-function withDemoInputs(profile: StudentProfile, availableSkillIds: string[]): StudentProfile {
+// Optional demographic answers stay blank: they are consent-gated and never demo-filled.
+// The sample student is an entry-level first-year college student.
+const SAMPLE_RESUME_URL = "/sample-resume.pdf";
+// Values from earlier, more advanced demo versions; replaced when found unchanged.
+const LEGACY_DEMO_TITLES = ["Student Software Developer", "IT Help Desk Assistant", "Study Group Finder", "Transit Delay Analysis"];
+const LEGACY_DEMO_SKILLS = ["python", "git", "sql", "javascript_typescript", "react", "rest_apis", "databases"];
+const LEGACY_DEMO_CERTS = ["AWS Certified Cloud Practitioner", "Google Data Analytics Certificate"];
+function withDemoInputs(
+  profile: StudentProfile,
+  availableSkillIds: string[],
+  availableFields: string[],
+): StudentProfile {
   const year = new Date().getFullYear();
-  const sampleSkills = ["python", "git", "sql"].filter(id => availableSkillIds.includes(id));
+  // Fall semester starts a new class; graduation is four springs after it begins.
+  const startYear = new Date().getMonth() >= 7 ? year : year - 1;
+  const pick = (ids: string[]) => ids.filter(id => availableSkillIds.includes(id));
+  const sampleSkills = pick(["python", "excel"]);
+  const or = <T,>(value: T, fallback: T) => (typeof value === "string" ? value.trim() : value) ? value : fallback;
+  const demoExperiences: StudentExperience[] = [{
+    id: "bridgepath-demo-v3-experience",
+    kind: "work",
+    title: "Student Library Assistant",
+    organization: "Towson University — Albert S. Cook Library",
+    description: "Help students find resources at the front desk, check materials in and out, and keep study spaces organized.",
+    startMonth: `${startYear}-09`,
+    endMonth: "",
+    ongoing: true,
+    skillIds: pick(["excel"]),
+    accomplishments: "Track daily desk questions in a shared Excel sheet used for weekly staffing.",
+  }];
+  const demoProjects: StudentProject[] = [{
+    id: "bridgepath-demo-v3-project",
+    kind: "academic",
+    title: "Grade Calculator",
+    organization: "Towson University — Intro to Computer Science",
+    description: "First Python program for an intro course: reads assignment scores from a file and calculates weighted course grades.",
+    url: "",
+    startMonth: `${startYear}-10`,
+    endMonth: `${startYear}-12`,
+    skillIds: pick(["python"]),
+    accomplishments: "Added input checks so missing or invalid scores are reported instead of crashing.",
+  }];
+  const isLegacy = (row: { title: string }) => /\(demo\)|sample university/i.test(JSON.stringify(row)) || LEGACY_DEMO_TITLES.includes(row.title);
+  // Older demo entries are refreshed with the current sample; student-added entries are kept.
+  const withDemoEntries = <T extends { id: string; title: string }>(saved: T[], demo: T[]): T[] => {
+    if (!saved.length) return demo;
+    return saved.some(isLegacy) ? [...saved.filter(row => !isLegacy(row)), ...demo] : saved;
+  };
+  const sameSet = (a: string[], b: string[]) => a.length === b.length && a.every(value => b.includes(value));
+  const legacySkills = sameSet(profile.skills.canonicalIds, LEGACY_DEMO_SKILLS) && !profile.skills.additional.length;
+  const legacyCerts = sameSet(profile.certifications, LEGACY_DEMO_CERTS);
+  const legacyEducation = /towson/i.test(profile.education.college) && profile.education.academicYear === "3" && profile.education.gpa === "3.6";
+  const savedCollege = /sample university|georgia state/i.test(profile.education.college)
+    ? ""
+    : profile.education.college;
+  const education = legacyEducation
+    ? { ...profile.education, academicYear: "" as const, expectedGraduation: "", gpa: "" }
+    : profile.education;
   return {
     ...profile,
-    experiences: profile.experiences.length ? profile.experiences : [{
-      id: "bridgepath-demo-experience",
-      kind: "research",
-      title: "Student Software Developer (demo)",
-      organization: "Sample University — computing lab (demo)",
-      description: "Built a Python tool to clean sample records, query a small SQL database, and summarize findings for a class research team.",
-      startMonth: `${year - 1}-09`,
-      endMonth: `${year}-05`,
-      ongoing: false,
-      skillIds: sampleSkills,
-      accomplishments: "Added input validation, wrote repeatable checks, and documented the workflow in a README. Sample experience for the demo only.",
-      evidenceUrl: "",
-    }],
+    personal: {
+      preferredName: or(profile.personal.preferredName, "Jordan Lee"),
+      cityState: or(profile.personal.cityState, "Towson, MD"),
+    },
+    careerInterests: profile.careerInterests.length
+      ? profile.careerInterests
+      : ["software_engineering", "data_science_ai_ml"].filter(field => availableFields.includes(field)),
+    education: {
+      ...education,
+      college: or(savedCollege, "Towson University"),
+      major: or(education.major, "Computer Science"),
+      degreeLevel: or(education.degreeLevel, "bachelor"),
+      academicYear: or(education.academicYear, "1"),
+      expectedGraduation: or(education.expectedGraduation, `${startYear + 4}-05`),
+      gpa: or(education.gpa, "3.4"),
+      gpaScale: or(education.gpaScale ?? "", "4"),
+      enrollmentStatus: or(education.enrollmentStatus, "full_time"),
+    },
+    experiences: withDemoEntries(profile.experiences, demoExperiences),
     skills: {
       ...profile.skills,
-      canonicalIds: profile.skills.canonicalIds.length || profile.skills.additional.length
-        ? profile.skills.canonicalIds : sampleSkills,
+      canonicalIds: legacySkills || (!profile.skills.canonicalIds.length && !profile.skills.additional.length)
+        ? sampleSkills : profile.skills.canonicalIds,
     },
-    preferences: {
-      targetRoles: profile.preferences.targetRoles.length ? profile.preferences.targetRoles : ["Software Engineering Intern"],
-      locations: profile.preferences.locations.length ? profile.preferences.locations : ["Washington, DC"],
-      workModes: profile.preferences.workModes.length ? profile.preferences.workModes : ["remote", "hybrid"],
-      willingToRelocate: profile.preferences.willingToRelocate || "yes",
-      season: profile.preferences.season || "summer",
-      year: profile.preferences.year || String(year + 1),
-    },
+    projects: withDemoEntries(profile.projects, demoProjects),
+    certifications: legacyCerts || !profile.certifications.length
+      ? ["Microsoft Office Specialist: Excel Associate"]
+      : profile.certifications,
   };
 }
 
@@ -94,7 +149,6 @@ export function OnboardingWizard({
     ready,
     canonicalSkills,
     careerFields,
-    internshipOptions,
     saveProfile,
     journeyStage,
     setJourneyStage,
@@ -103,7 +157,7 @@ export function OnboardingWizard({
   const initialized = useRef(false);
   const [draft, setDraft] = useState<StudentProfile>(emptyProfile);
   const [step, setStep] = useState<OnboardingStep>(ONBOARDING_STEPS[0]);
-  const stepIndex = ONBOARDING_STEPS.indexOf(step);
+  const stepIndex = (ONBOARDING_STEPS as readonly OnboardingStep[]).indexOf(step);
   const [errors, setErrors] = useState<ProfileErrors>({});
   const summaryRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -117,9 +171,12 @@ export function OnboardingWizard({
   useEffect(() => {
     if (!ready || initialized.current) return;
     initialized.current = true;
-    setDraft(withDemoInputs(profile, canonicalSkills.map(skill => skill.skill_id)));
+    setDraft(withDemoInputs(profile, canonicalSkills.map(skill => skill.skill_id), careerFields));
+    // Start with the sample resume attached so the Resume step shows a selected file.
+    void loadSampleResume();
     setStep(
-      journeyStage === "complete" && editing
+      // Edit links may jump straight to a step (e.g. "Add experience" → step 3).
+      editing
         ? (initialStep ?? ONBOARDING_STEPS[0])
         : ONBOARDING_STEPS[0],
     );
@@ -229,7 +286,7 @@ export function OnboardingWizard({
     const completed: StudentProfile = {
       ...next,
       onboarding: {
-        step: 4,
+        step: 3,
         completed: true,
         completedAt: new Date().toISOString(),
       },
@@ -246,15 +303,6 @@ export function OnboardingWizard({
     setDraft((current) => ({
       ...current,
       education: { ...current.education, [key]: value },
-    }));
-  }
-  function updatePreferences<K extends keyof StudentProfile["preferences"]>(
-    key: K,
-    value: StudentProfile["preferences"][K],
-  ) {
-    setDraft((current) => ({
-      ...current,
-      preferences: { ...current.preferences, [key]: value },
     }));
   }
   function updateExperience(index: number, patch: Partial<StudentExperience>) {
@@ -274,7 +322,28 @@ export function OnboardingWizard({
     }));
   }
   async function selectResume(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
+    await reviewResume(event.target.files?.[0], event.target);
+  }
+  async function loadSampleResume() {
+    try {
+      const response = await fetch(SAMPLE_RESUME_URL);
+      if (!response.ok) throw new Error("sample unavailable");
+      const blob = await response.blob();
+      const input = document.getElementById("resume-file") as HTMLInputElement | null;
+      if (input) input.value = "";
+      const attached = await reviewResume(
+        new File([blob], "Jordan-Lee-Resume.pdf", { type: "application/pdf" }),
+      );
+      if (attached)
+        setDraft((current) => ({
+          ...current,
+          resume: { ...current.resume, reviewedLocally: true },
+        }));
+    } catch {
+      setResumeError("The sample resume could not be loaded.");
+    }
+  }
+  async function reviewResume(file: File | undefined, input?: HTMLInputElement): Promise<boolean> {
     const request = ++resumeRequest.current;
     setResumeFile(null);
     setResumeError("");
@@ -282,20 +351,24 @@ export function OnboardingWizard({
       ...current,
       resume: { ...current.resume, reviewedLocally: false },
     }));
-    if (!file) return;
+    if (!file) return false;
     setInspecting(true);
     try {
       const error = await inspectResumeFile(file);
-      if (request !== resumeRequest.current) return;
+      if (request !== resumeRequest.current) return false;
       if (error) {
         setResumeError(error);
-        event.target.value = "";
-      } else setResumeFile(file);
+        if (input) input.value = "";
+        return false;
+      }
+      setResumeFile(file);
+      return true;
     } catch {
       if (request === resumeRequest.current)
         setResumeError(
           "This file could not be read. Choose another file or continue without a resume.",
         );
+      return false;
     } finally {
       if (request === resumeRequest.current) setInspecting(false);
     }
@@ -338,13 +411,6 @@ export function OnboardingWizard({
         </h1>
         <p>{stageDescriptions[stepIndex]}</p>
       </header>
-      {(step === 3 || step === 4) && (
-        <p className="profile-inline-notice" role="note">
-          Demo setup: empty experience, skill, and preference inputs start with editable
-          sample values. These values are not extracted from your resume. Existing saved
-          entries are preserved.
-        </p>
-      )}
       <form onSubmit={submit} noValidate>
         {Object.keys(errors).length > 0 && (
           <div
@@ -566,8 +632,7 @@ export function OnboardingWizard({
               <h2>Resume (optional)</h2>
               <p className="supporting-text">
                 Select a PDF or DOCX up to 5 MB for local review. It is not
-                uploaded, parsed, or saved. No profile fields have been
-                extracted.
+                uploaded, parsed, or saved.
               </p>
               <FormField
                 id="resume-file"
@@ -585,6 +650,11 @@ export function OnboardingWizard({
                   }
                 />
               </FormField>
+              {!resumeFile && !inspecting && (
+                <button type="button" className="plain-button" onClick={loadSampleResume}>
+                  Use sample resume
+                </button>
+              )}
               {inspecting && <p role="status">Checking file format…</p>}
               {resumeFile && (
                 <div className="resume-review">
@@ -1054,29 +1124,6 @@ export function OnboardingWizard({
                     />
                   </FormField>
                   <FormField
-                    id={`experience-${index}-evidenceUrl`}
-                    label="Evidence URL (optional)"
-                    error={errors[`experience-${index}-evidenceUrl`]}
-                  >
-                    <input
-                      id={`experience-${index}-evidenceUrl`}
-                      type="url"
-                      value={experience.evidenceUrl ?? ""}
-                      maxLength={1000}
-                      onChange={(event) =>
-                        updateExperience(index, {
-                          evidenceUrl: event.target.value,
-                        })
-                      }
-                      aria-invalid={Boolean(
-                        errors[`experience-${index}-evidenceUrl`],
-                      )}
-                      aria-describedby={described(
-                        `experience-${index}-evidenceUrl`,
-                      )}
-                    />
-                  </FormField>
-                  <FormField
                     id={`experience-${index}-description`}
                     label="What did you do? (optional)"
                   >
@@ -1416,199 +1463,6 @@ export function OnboardingWizard({
                 setDraft({ ...draft, certifications })
               }
             />
-          </>
-        )}
-        {step === 4 && (
-          <>
-
-            <FormField
-              id="role-from-dataset"
-              label="Choose an internship role from the dataset (optional)"
-            >
-              <select
-                id="role-from-dataset"
-                value=""
-                onChange={(event) =>
-                  updatePreferences(
-                    "targetRoles",
-                    uniqueEntries([
-                      ...draft.preferences.targetRoles,
-                      event.target.value,
-                    ]),
-                  )
-                }
-              >
-                <option value="">Choose a role to add</option>
-                {internshipOptions
-                  .filter((option) =>
-                    draft.careerInterests.includes(option.field),
-                  )
-                  .map((option) => (
-                    <option
-                      value={option.title}
-                      key={`${option.field}-${option.title}`}
-                    >
-                      {option.title}
-                    </option>
-                  ))}
-              </select>
-            </FormField>
-            <TagEditor
-              id="targetRoles"
-              label="Target internship roles"
-              values={draft.preferences.targetRoles}
-              onChange={(targetRoles) =>
-                updatePreferences("targetRoles", targetRoles)
-              }
-              error={errors.targetRoles}
-              hint="Enter internship roles you’re interested in, or “Still exploring.”"
-            />
-            <FormField
-              id="location-from-dataset"
-              label="Preferred location from this dataset (optional)"
-            >
-              <select
-                id="location-from-dataset"
-                value=""
-                onChange={(event) =>
-                  updatePreferences(
-                    "locations",
-                    uniqueEntries([
-                      ...draft.preferences.locations,
-                      event.target.value,
-                    ]),
-                  )
-                }
-              >
-                <option value="">Choose a location to add</option>
-                {[
-                  ...new Set(
-                    internshipOptions
-                      .flatMap((option) =>
-                        option.location.split(";").map((value) => value.trim()),
-                      )
-                      .filter(Boolean),
-                  ),
-                ]
-                  .sort()
-                  .map((location) => (
-                    <option key={location}>{location}</option>
-                  ))}
-              </select>
-            </FormField>
-            <TagEditor
-              id="preferredLocations"
-              label="Preferred locations (optional)"
-              values={draft.preferences.locations}
-              onChange={(locations) =>
-                updatePreferences("locations", locations)
-              }
-              hint="Add cities or regions. Leave blank if flexible."
-            />
-            <fieldset
-              className="mode-options"
-              id="workModes"
-              aria-describedby={
-                errors.workModes ? "workModes-error" : undefined
-              }
-            >
-              <legend>Working arrangements</legend>
-              {(
-                [
-                  ["remote", "Remote"],
-                  ["hybrid", "Hybrid"],
-                  ["on_site", "On-site"],
-                ] as const
-              ).map(([mode, label]) => (
-                <label key={mode} className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={draft.preferences.workModes.includes(mode)}
-                    onChange={(event) =>
-                      updatePreferences(
-                        "workModes",
-                        event.target.checked
-                          ? [...draft.preferences.workModes, mode]
-                          : draft.preferences.workModes.filter(
-                              (value) => value !== mode,
-                            ),
-                      )
-                    }
-                  />
-                  {label}
-                </label>
-              ))}
-              {errors.workModes && (
-                <p id="workModes-error" className="field-error">
-                  {errors.workModes}
-                </p>
-              )}
-            </fieldset>
-            <FormField
-              id="willingToRelocate"
-              label="Would you relocate for an internship?"
-              error={errors.willingToRelocate}
-            >
-              <select
-                id="willingToRelocate"
-                value={draft.preferences.willingToRelocate}
-                onChange={(event) =>
-                  updatePreferences(
-                    "willingToRelocate",
-                    event.target
-                      .value as StudentProfile["preferences"]["willingToRelocate"],
-                  )
-                }
-                aria-invalid={Boolean(errors.willingToRelocate)}
-                aria-describedby={described("willingToRelocate")}
-              >
-                <option value="">Choose a preference</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-                <option value="unsure">Not sure yet</option>
-              </select>
-            </FormField>
-            <div className="profile-field-grid">
-              <FormField
-                id="season"
-                label="Preferred internship season"
-                error={errors.season}
-              >
-                <select
-                  id="season"
-                  value={draft.preferences.season}
-                  onChange={(event) =>
-                    updatePreferences(
-                      "season",
-                      event.target
-                        .value as StudentProfile["preferences"]["season"],
-                    )
-                  }
-                  aria-invalid={Boolean(errors.season)}
-                  aria-describedby={described("season")}
-                >
-                  <option value="">Choose a season</option>
-                  <option value="spring">Spring</option>
-                  <option value="summer">Summer</option>
-                  <option value="fall">Fall</option>
-                  <option value="winter">Winter</option>
-                  <option value="any">Any season</option>
-                </select>
-              </FormField>
-              <FormField id="year" label="Internship year" error={errors.year}>
-                <input
-                  id="year"
-                  type="number"
-                  inputMode="numeric"
-                  value={draft.preferences.year}
-                  onChange={(event) =>
-                    updatePreferences("year", event.target.value)
-                  }
-                  aria-invalid={Boolean(errors.year)}
-                  aria-describedby={described("year")}
-                />
-              </FormField>
-            </div>
             <details className="disclosure">
               <summary>Review your profile before finishing</summary>
               <div className="disclosure-content">
@@ -1639,7 +1493,7 @@ export function OnboardingWizard({
             <span />
           )}
           <button type="submit" className="button" disabled={inspecting}>
-            {step === 4
+            {stepIndex === ONBOARDING_STEPS.length - 1
               ? editing
                 ? "Save and discover internships"
                 : "Discover internships"

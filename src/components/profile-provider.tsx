@@ -145,7 +145,7 @@ export function ProfileGate({ children }: { children: ReactNode }) {
   if (!ready || !allowed)
     return (
       <main id="main-content" className="profile-loading" role="status">
-        {ready ? "Opening your student setup…" : "Loading your local profile…"}
+        {ready ? "Opening your profile…" : "Loading your local profile…"}
       </main>
     );
   return (

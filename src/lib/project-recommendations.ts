@@ -108,3 +108,13 @@ export function recommendProjects(context: CareerContext, data: WorkbookDataset,
         return a.id.localeCompare(b.id);
     });
 }
+
+/** Readable title for UI: concept titles are stored as "A + B: artifact". */
+export function projectDisplayTitle(project: Pick<ProjectRecommendation, "kind" | "title">) {
+    if (project.kind !== "concept") return project.title;
+    const [focus, artifact] = project.title.split(": ");
+    if (!artifact) return project.title;
+    const labels = focus.split(" + ").map(label => label.replace(/\s*\(.*?\)/g, ""));
+    const list = labels.length > 1 ? `${labels.slice(0, -1).join(", ")} & ${labels[labels.length - 1]}` : labels[0];
+    return `${artifact[0].toUpperCase()}${artifact.slice(1)} with ${list}`;
+}

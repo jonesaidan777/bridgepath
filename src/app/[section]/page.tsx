@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { MyOpportunities } from "@/components/my-opportunities";
-import { CareerInsights } from "@/components/career-insights";
 import { WorkbookProjects } from "@/components/workbook-projects";
 import { researchHref, projectHref } from "@/lib/data";
 import { StudentProfilePage } from "@/components/profile-page";
@@ -11,7 +10,8 @@ import { navigation } from "@/lib/navigation";
 // Preserve the research routes while Profile becomes a browser-local student view.
 export function generateStaticParams() {
   return navigation
-    .filter((item) => item.href !== "/")
+    // These have their own route folders.
+    .filter((item) => !["/your-fit", "/your-resume"].includes(item.href))
     .map((item) => ({ section: item.href.slice(1) }));
 }
 
@@ -23,9 +23,10 @@ export default async function PlaceholderPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { section } = await params;
+  // My Opportunities became the Career Insights job board; keep old links working.
+  if (section === "my-opportunities") redirect("/career-insights");
   const item = navigation.find((item) => item.href === `/${section}`);
   if (!item) notFound();
-  if (section === "my-opportunities") return <MyOpportunities />;
   if (section === "profile") return <StudentProfilePage />;
   if (section === "career-insights" || section === "my-projects") {
     const query = await searchParams;
@@ -41,9 +42,7 @@ export default async function PlaceholderPage({
             skillId: value("skill"),
           }),
         );
-      return (
-        <CareerInsights careerField={value("field")} skillId={value("skill")} />
-      );
+      return <MyOpportunities />;
     }
     if (value("project")) redirect(projectHref(value("project")!));
     return <WorkbookProjects internshipId={value("internship")} />;

@@ -17,9 +17,9 @@ export function StudentWelcome() {
         </strong>
         .
       </p>
-      <p>Your evidence-based shortlist is ready in My Opportunities.</p>
-      <Link href="/my-opportunities" className="button">
-        View My Opportunities
+      <p>Your evidence-based shortlist is ready in Career Insights.</p>
+      <Link href="/career-insights" className="button">
+        View Career Insights
         <ArrowRight size={20} />
       </Link>
     </header>

@@ -110,8 +110,6 @@ test("required fields, graduation dates, internship dates, and GPA scale validat
   assert.ok(api.validateProfileStep(profile, 2).gpa);
   profile.education.gpa = "8.2 / 10";
   assert.equal(api.validateProfileStep(profile, 2).gpa, undefined);
-  profile.preferences.year = "2001";
-  assert.ok(api.validateProfileStep(profile, 4).year);
 });
 test("repeatable experiences and projects preserve records and validate entry errors", () => {
   const profile = completeStudent();
@@ -343,10 +341,39 @@ test("calendar changes do not discard a previously valid student profile", () =>
   assert.ok(api.validateProfileStep(profile, 2).expectedGraduation);
 });
 
-test("resume is first while stable IDs preserve saved education and preference links", () => {
-  assert.deepEqual(api.ONBOARDING_STEPS, [5, 1, 2, 3, 4]);
+test("saved progress on the removed Preferences step resumes at Experience & skills", () => {
+  const profile = completeStudent();
+  profile.onboarding = { step: 4, completed: false, completedAt: null };
+  const restored = api.parseStoredProfile(api.serializeProfile(profile));
+  assert.ok(restored);
+  assert.equal(restored.onboarding.step, 3);
+});
+
+test("saved preferences from older profiles are not used for matching", () => {
+  const ctx = api.toCareerContext(completeStudent());
+  assert.deepEqual(ctx.preferences.workModes, []);
+  assert.equal(ctx.preferences.year, "");
+});
+
+test("resume is first while stable IDs preserve saved education links", () => {
+  assert.deepEqual(api.ONBOARDING_STEPS, [5, 1, 2, 3]);
   const profile = completeStudent();
   profile.onboarding = { step: 5, completed: false, completedAt: null };
   const restored = api.parseStoredProfile(api.serializeProfile(profile));
   assert.equal(restored.onboarding.step, 5);
+});
+
+test("checked-off tips survive saving and reloading", () => {
+  const profile = completeStudent();
+  profile.completedTips = ["timing", "career-center"];
+  const restored = api.parseStoredProfile(api.serializeProfile(profile));
+  assert.deepEqual(restored.completedTips, ["timing", "career-center"]);
+  const legacy = completeStudent();
+  assert.equal(api.parseStoredProfile(api.serializeProfile(legacy)).completedTips, undefined);
+});
+
+test("started projects survive saving and reloading", () => {
+  const profile = completeStudent();
+  profile.startedProjects = ["PRJ-111", "concept-INT-001"];
+  assert.deepEqual(api.parseStoredProfile(api.serializeProfile(profile)).startedProjects, ["PRJ-111", "concept-INT-001"]);
 });

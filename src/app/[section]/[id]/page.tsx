@@ -22,11 +22,7 @@ export default async function DetailPage({
       <PersonalizedRole
         internshipId={internship.internship_id}
         reviewRequirements={value("review") === "requirements"}
-        backTo={
-          section === "my-opportunities"
-            ? "/my-opportunities"
-            : "/career-insights"
-        }
+        backTo="/career-insights"
       />
     );
   }

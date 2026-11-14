@@ -11,7 +11,7 @@ export default async function OnboardingPage({
     <OnboardingWizard
       editing={edit === "1"}
       initialStep={
-        ["1", "2", "3", "4", "5"].includes(step || "")
+        ["1", "2", "3", "5"].includes(step || "")
           ? (Number(step) as OnboardingStep)
           : undefined
       }

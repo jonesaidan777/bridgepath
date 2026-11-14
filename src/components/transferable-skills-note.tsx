@@ -9,8 +9,8 @@ export function TransferableSkillsNote({ internshipId, careerField }: {
   if (related === null) return null;
   if (!related.length) return <p className="transferable-skills-note supporting-text">No other internships with shared recorded skills were found in this field in our workbook yet.</p>;
   return <div className="transferable-skills-note">
-    <p><strong>Build skills that carry further.</strong> {related.length} other {related.length === 1 ? "internship" : "internships"} in {careerFieldLabel(careerField || "")} share at least one skill requirement with this role in our workbook.</p>
-    <p className="supporting-text">Developing these skills can help you prepare for related opportunities. Each role has its own qualifications and eligibility conditions.</p>
+    <p className="transferable-skills-heading">Related roles</p>
+    <p className="supporting-text">{related.length} other {careerFieldLabel(careerField || "")} {related.length === 1 ? "internship asks" : "internships ask"} for the same skills.</p>
     <details className="discovery-evidence">
       <summary>See the shared skills and roles</summary>
       <div className="disclosure-content">

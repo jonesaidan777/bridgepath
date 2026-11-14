@@ -1364,28 +1364,527 @@ input, textarea, select, button { font-family: inherit; }
 
 .discovery-page { max-width: 1040px; }
 .discovery-page > .setup-step { margin-bottom: 18px; }
-.discovery-listing.is-selected { border-left: 2px solid var(--accent); padding-left: 20px; }
-.discovery-listing h2 { margin: 8px 0 12px; }
-.discovery-reason { margin: 18px 0 10px; }
-.discovery-interest { display: flex; align-items: center; gap: 12px; margin-top: 22px; min-height: 44px; font-size: 18px; cursor: pointer; }
-.discovery-interest input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--accent); }
-.discovery-interest input:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
-.discovery-comparison { margin-top: 48px; scroll-margin-top: 28px; }
-.discovery-selection-count { margin: 18px 0; }
-.discovery-role-comparison { margin-top: 26px; }
-.discovery-comparison-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; margin-bottom: 24px; }
-.discovery-comparison-grid h3 { margin-bottom: 14px; }
-.discovery-evidence-list { list-style: none; padding: 0; margin: 16px 0; }
+.discovery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; align-items: start; }
+.discovery-listing { position: relative; display: flex; flex-direction: column; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 1px 2px rgb(23 23 23 / .04); transition: border-color .15s, box-shadow .15s, transform .15s; }
+.discovery-listing:hover { border-color: #bdb7aa; box-shadow: 0 6px 18px rgb(23 23 23 / .08); transform: translateY(-1px); }
+.discovery-listing.is-selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 6px 18px rgb(240 90 50 / .12); }
+/* Full-card select button sits beneath content; content ignores pointer so clicks fall through. */
+.discovery-select { position: absolute; inset: 0; z-index: 0; width: 100%; padding: 0; border: 0; border-radius: inherit; background: transparent; cursor: pointer; }
+.discovery-select:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.discovery-listing > :not(.discovery-select) { position: relative; z-index: 1; pointer-events: none; }
+.discovery-listing > .transferable-skills-note { pointer-events: auto; cursor: auto; }
+.discovery-card-head { display: flex; align-items: center; gap: 12px; }
+.discovery-logo { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-size: 14px; font-weight: 700; letter-spacing: .5px; }
+.discovery-company { flex: 1; min-width: 0; color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1.35; }
+.discovery-check { display: grid; place-items: center; flex-shrink: 0; width: 24px; height: 24px; border: 1.5px solid #c9c4b8; border-radius: 6px; background: #fff; color: #fff; transition: background-color .15s, border-color .15s; }
+.is-selected .discovery-check { border-color: var(--accent); background: var(--accent); }
+.discovery-listing h2 { margin: 16px 0 14px; font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -.2px; }
+.discovery-listing h2:has(.discovery-title-link) { pointer-events: none; }
+.discovery-listing h2 { position: relative; z-index: 2; }
+.discovery-title-link { pointer-events: auto; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; text-decoration: none; }
+.discovery-title-link svg { display: inline-block; margin-left: 4px; vertical-align: -2px; color: var(--muted); transition: color .15s, transform .15s; }
+.discovery-title-link:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+.discovery-title-link:hover svg { color: var(--accent); transform: translate(1px, -1px); }
+.discovery-title-link:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+.discovery-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.discovery-tags li { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--paper); color: var(--muted); font-size: 13.5px; line-height: 1.4; }
+.discovery-tags svg { flex-shrink: 0; }
+.discovery-reach { display: flex; align-items: center; gap: 24px; margin-top: 40px; padding: 24px 28px; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; }
+.discovery-reach-number { flex-shrink: 0; color: var(--accent); font-size: 48px; font-weight: 700; line-height: 1; }
+.discovery-reach-text { font-size: 18px; line-height: 1.5; margin-bottom: 6px; }
 .discovery-evidence { padding: 12px 0; }
 .discovery-evidence summary { cursor: pointer; font-size: 17px; line-height: 1.7; }
 .discovery-evidence .disclosure-content { padding: 14px 0 8px; }
-.discovery-eligibility + .discovery-eligibility { margin-top: 24px; }
-.discovery-role-comparison > .plain-button { margin: 12px 0 20px; }
 @media (max-width: 700px) {
-  .discovery-comparison-grid { grid-template-columns: 1fr; gap: 24px; }
-  .discovery-listing.is-selected { padding-left: 14px; }
+  .discovery-grid { grid-template-columns: 1fr; }
+  .discovery-reach { flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px; }
 }
 
 .transferable-skills-note { margin-top: 22px; }
+.discovery-listing .transferable-skills-note { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; }
+.discovery-listing .transferable-skills-note .supporting-text { font-size: 14.5px; line-height: 1.6; }
+.discovery-listing .discovery-evidence { padding: 8px 0 0; }
+.discovery-listing .discovery-evidence summary { font-size: 14.5px; }
+.transferable-skills-heading { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); margin-bottom: 4px; }
 .transferable-skills-note > p + p { margin-top: 8px; }
 .transferable-skills-note li + li { margin-top: 14px; }
+
+/* Where you stand (/your-fit) */
+.readiness-page { max-width: 1040px; }
+.readiness-page > .setup-step { margin-bottom: 18px; }
+.readiness-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; }
+.readiness-top .page-heading { flex: 1; min-width: 0; }
+.readiness-score { display: flex; align-items: center; gap: 18px; flex-shrink: 0; padding: 18px 22px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 1px 2px rgb(23 23 23 / .04); }
+.readiness-score > div { text-align: center; min-width: 96px; }
+.readiness-score-label { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1.3; }
+.readiness-score-value { margin-top: 6px; font-size: 36px; font-weight: 700; line-height: 1; color: var(--ink); }
+.readiness-score-value.is-after { color: var(--accent); }
+.readiness-score-unit { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.readiness-score-arrow { color: var(--accent); flex-shrink: 0; }
+.readiness-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 20px; font-weight: 700; }
+.readiness-heading svg { color: var(--accent); flex-shrink: 0; }
+.readiness-grade { display: flex; align-items: center; gap: 28px; margin-top: 32px; padding: 26px 28px; border-radius: 12px; border: 1px solid; }
+.readiness-grade.is-low { background: #fdf1ee; border-color: #f2c4b6; }
+.readiness-grade.is-mid { background: #fdf7e9; border-color: #ecd9a6; }
+.readiness-grade.is-high { background: #eef7f1; border-color: #b9dcc5; }
+.readiness-grade-dial { --tone: #c2410c; display: grid; place-items: center; align-content: center; flex-shrink: 0; width: 112px; height: 112px; border-radius: 50%;
+  background: radial-gradient(closest-side, #fff 78%, transparent 79%), conic-gradient(var(--tone) calc(var(--score) * 1%), #ebe6dc 0); }
+.is-mid .readiness-grade-dial { --tone: #b7791f; }
+.is-high .readiness-grade-dial { --tone: #2f7a4a; }
+.readiness-grade-number { font-size: 34px; font-weight: 700; line-height: 1; color: var(--tone); }
+.readiness-grade-out { color: var(--muted); font-size: 13px; }
+.readiness-grade-label { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 700; color: #a83c1d; }
+.is-mid .readiness-grade-label { color: #8a5a12; }
+.is-high .readiness-grade-label { color: #2f7a4a; }
+.readiness-grade-message { margin-top: 6px; font-size: 17px; line-height: 1.55; }
+.readiness-grade-after { margin-top: 10px; color: var(--muted); font-size: 15px; }
+.readiness-grade-after strong { color: #2f7a4a; }
+.readiness-roles { margin-top: 36px; }
+.readiness-roles > ul { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.readiness-role { padding: 20px 22px; }
+.readiness-role + .readiness-role { border-top: 1px solid var(--line); }
+.readiness-role-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.readiness-role-text { min-width: 0; }
+.readiness-role-company { color: var(--muted); font-size: 14px; font-weight: 600; }
+.readiness-role-title { font-size: 17px; font-weight: 700; line-height: 1.35; }
+.readiness-role-verdict { margin-top: 4px; font-size: 14.5px; line-height: 1.5; }
+.readiness-role-verdict.is-low { color: #a83c1d; }
+.readiness-role-verdict.is-mid { color: #8a5a12; }
+.readiness-role-verdict.is-high { color: #2f7a4a; }
+.readiness-role-meter { flex-shrink: 0; width: 180px; text-align: right; }
+.readiness-role-score { font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
+.readiness-role-score span { color: var(--muted); font-size: 13px; font-weight: 400; }
+.readiness-role-score.is-low { color: #c2410c; }
+.readiness-role-score.is-mid { color: #b7791f; }
+.readiness-role-score.is-high { color: #2f7a4a; }
+.readiness-bar { height: 8px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); overflow: hidden; }
+.readiness-bar span { display: block; height: 100%; border-radius: inherit; background: #c2410c; }
+.readiness-bar span.is-mid { background: #d69e2e; }
+.readiness-bar span.is-high { background: #2f7a4a; }
+.readiness-role-skills { margin-top: 12px; display: grid; gap: 6px; }
+.readiness-role-skills p { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.readiness-role-skills-label { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-right: 4px; }
+.readiness-chip.is-have { background: #e6f2ea; color: #2f7a4a; }
+.readiness-chip.is-impact-soft { background: #fdebe5; color: #a83c1d; }
+.readiness-projects { margin-top: 32px; }
+.readiness-project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.readiness-project { display: flex; flex-direction: column; gap: 10px; padding: 22px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.readiness-project-kind { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.readiness-project h3 { font-size: 18px; font-weight: 700; line-height: 1.3; }
+.readiness-project-objective { color: var(--muted); font-size: 14.5px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.readiness-project-skills { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.readiness-project-roles { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+/* Future resume (/your-resume) */
+.resume-preview-page { max-width: 900px; }
+.resume-preview-page > .setup-step { margin-bottom: 18px; }
+.resume-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin: 28px 0 18px; }
+.resume-toggle { display: inline-flex; padding: 4px; background: #fff; border: 1px solid var(--line); border-radius: 999px; }
+.resume-toggle button { padding: 8px 16px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: inherit; font-size: 15px; cursor: pointer; }
+.resume-toggle button.is-active { background: var(--ink); color: #fff; }
+.resume-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.resume-legend { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+.resume-legend-swatch { width: 14px; height: 14px; border-radius: 3px; background: #fff3c4; border: 1px solid #ecd9a6; }
+.resume-doc { padding: 48px 56px; background: #fff; border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 10px 30px rgb(23 23 23 / .08); font-family: "Times New Roman", Times, serif; color: #1f1f1f; font-size: 15px; line-height: 1.45; }
+.resume-doc-head { text-align: center; margin-bottom: 18px; }
+.resume-doc-head h2 { font-family: inherit; font-size: 28px; font-weight: 700; letter-spacing: .5px; }
+.resume-doc-head p { color: #555; margin-top: 4px; }
+.resume-doc section + section { margin-top: 16px; }
+.resume-doc h3 { font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding-bottom: 4px; margin-bottom: 8px; border-bottom: 1.5px solid #1f1f1f; }
+.resume-doc-row { display: flex; justify-content: space-between; gap: 16px; }
+.resume-doc-row p:last-child { flex-shrink: 0; color: #555; }
+.resume-doc-entry + .resume-doc-entry { margin-top: 10px; }
+.resume-doc-entry.is-new { margin: 0 -10px 10px; padding: 6px 10px; background: #fff3c4; border-radius: 4px; }
+.resume-doc ul { margin: 4px 0 0; padding-left: 20px; list-style: disc; }
+.resume-doc li { padding-left: 2px; }
+.resume-doc .resume-doc-skills { display: list-item; }
+.resume-doc li + li { margin-top: 2px; }
+.resume-new-badge { display: inline-flex; align-items: center; gap: 3px; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; vertical-align: 1px; }
+.resume-doc-skills span { display: inline; }
+.resume-doc-skills span:not(:last-child)::after { content: ", "; }
+.resume-doc-skills .is-new { background: #fff3c4; padding: 0 4px; border-radius: 3px; font-weight: 700; }
+@media (max-width: 700px) {
+  .resume-doc { padding: 28px 20px; }
+  .resume-doc-row { flex-direction: column; gap: 0; }
+}
+.readiness-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; margin-top: 28px; }
+.readiness-panel { padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.readiness-list { list-style: none; margin: 0; padding: 0; }
+.readiness-list li { padding: 14px 0; }
+.readiness-list li + li { border-top: 1px solid var(--line); }
+.readiness-item-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.readiness-item-head strong { font-size: 16px; margin-right: 2px; }
+.readiness-item-detail { margin-top: 4px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+.readiness-chip { display: inline-block; padding: 2px 9px; border-radius: 999px; background: var(--paper); color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+.readiness-chip.is-required { background: #fdebe5; color: #a83c1d; }
+.readiness-chip.is-impact { background: var(--accent); color: #fff; font-weight: 700; }
+@media (max-width: 760px) {
+  .readiness-top { flex-direction: column; gap: 20px; }
+  .readiness-score { width: 100%; justify-content: space-around; }
+  .readiness-role-main { flex-direction: column; gap: 10px; }
+  .readiness-role-meter { width: 100%; text-align: left; }
+  .readiness-grade { flex-direction: column; align-items: flex-start; }
+  .readiness-columns { grid-template-columns: 1fr; }
+}
+
+/* Journey breadcrumbs */
+.journey-crumbs { margin-bottom: 18px; }
+.journey-crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; margin: 0; padding: 0; list-style: none; font-size: 15px; }
+.journey-crumbs li { display: flex; align-items: center; }
+.journey-crumbs li + li::before { content: "→"; margin: 0 10px; color: var(--muted); }
+.journey-crumbs button { padding: 2px 0; border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: color .15s, text-decoration-color .15s; }
+.journey-crumbs button:hover { color: var(--ink); text-decoration-color: currentColor; }
+.journey-crumbs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.journey-crumbs [aria-current="step"] { color: var(--ink); font-weight: 700; }
+
+/* Clickable role rows + role dialog */
+.readiness-role.is-clickable { position: relative; transition: background-color .15s; }
+.readiness-role.is-clickable:hover { background: #fbfaf7; }
+.readiness-role.is-clickable > :not(.readiness-role-open) { position: relative; z-index: 1; pointer-events: none; }
+.readiness-role-open { position: absolute; inset: 0; z-index: 0; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.readiness-role-open:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.readiness-roles > ul { overflow: hidden; }
+.readiness-role-chevron { display: inline-block; margin-left: 4px; vertical-align: -3px; color: var(--muted); transition: transform .15s, color .15s; }
+.readiness-role.is-clickable:hover .readiness-role-chevron { color: var(--accent); transform: translateX(2px); }
+.role-dialog { position: fixed; inset: 0; margin: auto; width: min(880px, calc(100vw - 32px)); height: fit-content; max-height: calc(100vh - 48px); overflow-y: auto; padding: 0; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: var(--ink); box-shadow: 0 24px 60px rgb(23 23 23 / .25); }
+.role-dialog::backdrop { background: rgb(23 23 23 / .45); }
+.role-dialog-body { padding: 32px 36px; }
+.role-dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.role-dialog-head h2 { margin: 4px 0 12px; font-size: 24px; font-weight: 700; line-height: 1.25; }
+.role-dialog-close { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); cursor: pointer; }
+.role-dialog-close:hover { background: var(--paper); }
+.role-dialog-score { display: flex; align-items: center; gap: 16px; margin: 20px 0 6px; padding: 14px 16px; border-radius: 10px; }
+.role-dialog-score.is-low { background: #fdf1ee; }
+.role-dialog-score.is-mid { background: #fdf7e9; }
+.role-dialog-score.is-high { background: #eef7f1; }
+.role-dialog-score .readiness-role-score { margin: 0; flex-shrink: 0; }
+.role-dialog-score .readiness-role-verdict { margin: 0; }
+.role-dialog section { margin-top: 20px; }
+.role-dialog h3 { margin-bottom: 8px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.role-dialog section > p { font-size: 15.5px; line-height: 1.6; }
+.role-dialog-reqs { list-style: none; margin: 0; padding: 0; }
+.role-dialog-reqs li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; }
+.role-dialog-reqs li + li { border-top: 1px solid var(--line); }
+.role-dialog-req-icon { display: grid; place-items: center; flex-shrink: 0; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; color: #fff; background: #c2410c; }
+.is-met .role-dialog-req-icon { background: #2f7a4a; }
+.role-dialog-req-text { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 15px; }
+.role-dialog-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; text-decoration: none; }
+@media (max-width: 700px) { .role-dialog-body { padding: 20px; } }
+
+/* Why you're not a strong candidate yet */
+.readiness-reasons { margin-top: 28px; }
+.readiness-reasons ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.readiness-reasons li { display: flex; gap: 14px; padding: 18px 20px; background: #fff; border: 1px solid var(--line); border-top: 3px solid #c2410c; border-radius: 10px; }
+.readiness-reason-icon { display: grid; place-items: center; flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background: #fdf1ee; color: #c2410c; }
+.readiness-reason-title { font-size: 16.5px; font-weight: 700; line-height: 1.35; }
+.readiness-reason-detail { margin-top: 6px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+.readiness-reason-detail sup a, .readiness-sources sup a { color: var(--accent); text-decoration: none; font-size: 11px; margin-left: 2px; }
+@media (max-width: 760px) { .readiness-reasons ol { grid-template-columns: 1fr; } }
+.readiness-sources { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+.readiness-sources ol { margin: 8px 0 0; padding-left: 20px; }
+.readiness-sources a { color: var(--muted); }
+.readiness-sources a:hover { color: var(--ink); }
+
+/* Resume downloads + job figure */
+.resume-downloads { display: flex; flex-wrap: wrap; gap: 8px; }
+.resume-download { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: 14.5px; text-decoration: none; }
+.resume-download:hover { border-color: var(--ink); }
+.resume-jobs { display: flex; align-items: center; gap: 20px; margin: 0 0 18px; padding: 18px 22px; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; transition: border-color .2s; }
+.resume-jobs.is-after { border-left-color: var(--accent); }
+.resume-jobs-number { flex-shrink: 0; font-size: 40px; font-weight: 700; line-height: 1; color: var(--ink); }
+.resume-jobs.is-after .resume-jobs-number { color: var(--accent); }
+.resume-jobs-text { font-size: 17px; line-height: 1.4; }
+.resume-jobs-sub { margin-top: 4px; color: var(--muted); font-size: 14.5px; }
+.resume-preview-page > .resume-legend { margin: 0 0 10px; }
+@media (max-width: 700px) { .resume-jobs { flex-direction: column; align-items: flex-start; gap: 8px; } }
+
+/* Clickable project cards + project dialog */
+.readiness-project.is-clickable { position: relative; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.readiness-project.is-clickable:hover { border-color: #bdb7aa; box-shadow: 0 6px 18px rgb(23 23 23 / .08); transform: translateY(-1px); }
+.readiness-project.is-clickable > :not(.readiness-role-open) { position: relative; z-index: 1; pointer-events: none; }
+.readiness-project .readiness-role-open { border-radius: inherit; }
+.readiness-project-roles { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.readiness-project-more { display: inline-flex; align-items: center; gap: 2px; color: var(--accent); font-weight: 700; white-space: nowrap; }
+.role-dialog-note { margin-top: 6px; color: var(--muted); font-size: 13.5px !important; }
+.project-dialog-steps { margin: 0; padding-left: 22px; }
+.project-dialog-steps li { padding: 6px 0 8px; font-size: 15px; line-height: 1.55; }
+.project-dialog-steps li + li { border-top: 1px solid var(--line); }
+.project-dialog-steps p { margin-top: 3px; }
+.project-dialog-steps .text-link { display: inline-block; margin-top: 4px; font-size: 14px; }
+.role-dialog-posting { display: inline-flex; align-items: center; gap: 4px; margin-top: 12px; color: var(--accent); font-size: 15px; font-weight: 700; text-decoration: none; }
+.role-dialog-posting:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Dialog text fills the width; project start actions */
+.role-dialog p { max-width: none; }
+.role-dialog section > p { font-size: 16.5px; line-height: 1.65; }
+.project-dialog-actions { display: flex; align-items: center; gap: 16px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+.project-dialog-actions .button { display: inline-flex; align-items: center; gap: 8px; }
+.readiness-reasons li { align-items: center; padding: 14px 18px; }
+.readiness-reason-title { font-size: 17px; }
+.readiness-reason-detail { margin-top: 2px; font-size: 14px; }
+
+/* Fix-this actions on reason cards */
+.readiness-reasons li { align-items: flex-start; }
+.readiness-reasons li > div { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.readiness-reason-fix { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; padding: 6px 12px; border: 1px solid var(--accent); border-radius: 999px; background: #fff; color: var(--accent); font: inherit; font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; transition: background-color .15s, color .15s; }
+.readiness-reason-fix:hover { background: var(--accent); color: #fff; }
+.readiness-reason-fix:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* What to do next: actionable to-do list */
+.todo-list { list-style: none; margin: 0; padding: 0; }
+.todo-item { display: flex; gap: 14px; padding: 14px 0; }
+.todo-item + .todo-item { border-top: 1px solid var(--line); }
+.todo-step { display: grid; place-items: center; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-size: 13px; font-weight: 700; }
+.todo-item.is-build .todo-step { background: #e6f2ea; border-color: #b9dcc5; color: #2f7a4a; }
+.todo-item.is-apply .todo-step { background: var(--accent); border-color: var(--accent); color: #fff; }
+.todo-body { min-width: 0; flex: 1; }
+.todo-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.todo-link { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; font-size: 13.5px; text-decoration: none; cursor: pointer; transition: border-color .15s, color .15s; }
+.todo-link:hover { border-color: var(--accent); color: var(--accent); }
+.todo-link svg { flex-shrink: 0; color: var(--accent); }
+.todo-later { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 14px; }
+
+/* What most students don't know: checkable tips */
+.readiness-reasons-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.readiness-reasons-head .readiness-heading { margin-bottom: 8px; }
+.readiness-reasons-progress { color: var(--muted); font-size: 14.5px; font-weight: 700; }
+.readiness-reasons-bar { height: 6px; margin-bottom: 16px; border-radius: 999px; background: #ebe6dc; overflow: hidden; }
+.readiness-reasons-bar span { display: block; height: 100%; background: #2f7a4a; border-radius: inherit; transition: width .3s; }
+.readiness-reasons li { border-top-color: var(--accent); transition: opacity .2s, border-color .2s; }
+.readiness-reasons .readiness-reason-icon { background: #fdebe5; color: var(--accent); }
+.readiness-reasons li.is-done { border-top-color: #2f7a4a; opacity: .7; }
+.readiness-reasons li.is-done .readiness-reason-icon { background: #e6f2ea; color: #2f7a4a; }
+.readiness-reasons li.is-done .readiness-reason-title { text-decoration: line-through; text-decoration-color: #9a958b; }
+.readiness-reason-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 10px; }
+.readiness-reason-actions .readiness-reason-fix { margin-top: 0; }
+.readiness-reason-done { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; cursor: pointer; }
+.readiness-reason-done input { width: 18px; height: 18px; accent-color: #2f7a4a; cursor: pointer; }
+
+/* My Opportunities: selected roles, recommended roles, projects */
+.opp-section { margin-top: 36px; }
+.opp-section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.opp-section-head h2 { font-size: 22px; font-weight: 700; }
+.opp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.opp-card { display: flex; flex-direction: column; padding: 20px 22px; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 1px 2px rgb(23 23 23 / .04); }
+.opp-card.is-selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.opp-card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.opp-card h3 { margin: 8px 0 12px; font-size: 19px; font-weight: 700; line-height: 1.3; }
+.opp-score { flex-shrink: 0; font-size: 18px; font-weight: 700; }
+.opp-score span { color: var(--muted); font-size: 12px; font-weight: 400; }
+.opp-score.is-low { color: #c2410c; }
+.opp-score.is-mid { color: #b7791f; }
+.opp-score.is-high { color: #2f7a4a; }
+.opp-card-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-top: auto; padding-top: 16px; }
+.opp-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
+.opp-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.opp-toggle.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
+.opp-link { display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-size: 14.5px; font-weight: 700; text-decoration: none; }
+.opp-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.opportunities-page .discovery-title-link svg { display: inline-block; margin-left: 4px; vertical-align: -3px; color: var(--muted); }
+.my-project-status { align-self: flex-start; margin-bottom: 8px; }
+.opp-card h3 + .discovery-company { margin: -6px 0 8px; }
+
+/* My Opportunities job board */
+.job-board { max-width: 1040px; }
+.job-board-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.job-tabs { display: flex; gap: 4px; margin-top: 24px; border-bottom: 1px solid var(--line); }
+.job-tabs button { margin-bottom: -1px; padding: 10px 16px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted); font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+.job-tabs button span { margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-size: 12.5px; }
+.job-tabs button.is-active { border-bottom-color: var(--accent); color: var(--ink); }
+.job-tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.job-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.job-search { display: flex; flex: 1 1 280px; align-items: center; gap: 8px; padding: 0 14px; background: #fff; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); }
+.job-search:focus-within { border-color: var(--ink); }
+.job-search input { flex: 1; min-width: 0; height: 42px; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 15px; outline: none; }
+.job-select select { height: 44px; padding: 0 34px 0 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); font: inherit; font-size: 15px; cursor: pointer; }
+.job-count { margin: 16px 0 8px; color: var(--muted); font-size: 14px; }
+.job-list { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.job-row { position: relative; display: flex; align-items: center; gap: 16px; padding: 18px 20px; transition: background-color .15s; }
+.job-row + .job-row { border-top: 1px solid var(--line); }
+.job-row:hover { background: #fbfaf7; }
+.job-row.is-saved { box-shadow: inset 3px 0 0 var(--accent); }
+.job-row-open { position: absolute; inset: 0; z-index: 0; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.job-row-open:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.job-row > :not(.job-row-open) { position: relative; z-index: 1; pointer-events: none; }
+.job-logo { display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 10px; background: var(--paper); border: 1px solid var(--line); font-size: 15px; font-weight: 700; letter-spacing: .5px; }
+.job-main { flex: 1; min-width: 0; }
+.job-title { font-size: 17.5px; font-weight: 700; line-height: 1.3; }
+.job-row:hover .job-title { text-decoration: underline; text-underline-offset: 3px; }
+.job-company { margin-top: 2px; color: var(--ink); font-size: 15px; }
+.job-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 8px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 13.5px; }
+.job-meta li { display: inline-flex; align-items: center; gap: 4px; }
+.job-meta .job-tag { padding: 1px 9px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-size: 12.5px; }
+.job-side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+.job-match { font-size: 13.5px; color: var(--muted); }
+.job-match strong { font-size: 18px; }
+.job-match.is-low strong { color: #c2410c; }
+.job-match.is-mid strong { color: #b7791f; }
+.job-match.is-high strong { color: #2f7a4a; }
+.job-side .job-save { pointer-events: auto; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
+.job-save:hover { border-color: var(--accent); color: var(--accent); }
+.job-save.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
+@media (max-width: 700px) {
+  .job-board-head { flex-direction: column; align-items: flex-start; }
+  .job-row { align-items: flex-start; flex-wrap: wrap; }
+  .job-logo { width: 40px; height: 40px; }
+  .job-side { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; padding-left: 56px; }
+}
+
+/* Analyzing screen between Discover and Where you stand */
+.analyzing { display: grid; place-items: center; min-height: 70vh; padding: 24px 16px; }
+.analyzing-card { width: min(460px, 100%); padding: 36px 32px; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 12px 36px rgb(23 23 23 / .08); text-align: center; }
+.analyzing-card h1 { margin: 18px 0 22px; font-size: 26px; }
+.analyzing-spinner { width: 44px; height: 44px; margin: 0 auto; border: 4px solid #f3e1d9; border-top-color: var(--accent); border-radius: 50%; animation: analyzing-spin .9s linear infinite; }
+@keyframes analyzing-spin { to { transform: rotate(360deg); } }
+.analyzing-steps { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; text-align: left; }
+.analyzing-steps li { display: flex; align-items: center; gap: 12px; color: #b3ada2; font-size: 16px; transition: color .25s; }
+.analyzing-steps li.is-active { color: var(--ink); }
+.analyzing-steps li.is-done { color: var(--ink); }
+.analyzing-dot { display: grid; place-items: center; flex-shrink: 0; width: 22px; height: 22px; border: 2px solid #ddd7cc; border-radius: 50%; color: #fff; transition: background-color .25s, border-color .25s; }
+.is-active .analyzing-dot { border-color: var(--accent); }
+.is-done .analyzing-dot { border-color: #2f7a4a; background: #2f7a4a; }
+.analyzing-bar { height: 6px; margin-top: 24px; border-radius: 999px; background: #ebe6dc; overflow: hidden; }
+.analyzing-bar span { display: block; height: 100%; background: var(--accent); border-radius: inherit; transition: width .5s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .analyzing-spinner { animation-duration: 2.5s; }
+  .analyzing-bar span, .analyzing-steps li, .analyzing-dot { transition: none; }
+}
+
+/* ===== Motion polish =====
+   Entrances use fill-mode "backwards" so hover/selected transforms still apply after they finish.
+   Everything is disabled under prefers-reduced-motion at the end of this block. */
+html { scroll-behavior: smooth; }
+@keyframes bp-fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes bp-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bp-pop { 0% { transform: scale(.6); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+@keyframes bp-grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes bp-dialog-in { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+
+/* Page entrance on every route change */
+.page-content, .onboarding-content, .detail-page { animation: bp-fade-up .4s cubic-bezier(.2, .7, .2, 1) backwards; }
+
+/* Staggered card and row entrances */
+.discovery-listing, .job-row, .opp-card, .readiness-project, .readiness-reasons li,
+.todo-item, .readiness-role, .readiness-panel, .readiness-grade, .readiness-score, .analyzing-card {
+  animation: bp-fade-up .45s cubic-bezier(.2, .7, .2, 1) backwards;
+}
+:is(.discovery-listing, .job-row, .opp-card, .readiness-project, .readiness-reasons li, .todo-item, .readiness-role):nth-child(2) { animation-delay: .05s; }
+:is(.discovery-listing, .job-row, .opp-card, .readiness-project, .readiness-reasons li, .todo-item, .readiness-role):nth-child(3) { animation-delay: .1s; }
+:is(.discovery-listing, .job-row, .opp-card, .readiness-project, .readiness-reasons li, .todo-item, .readiness-role):nth-child(4) { animation-delay: .15s; }
+:is(.discovery-listing, .job-row, .opp-card, .readiness-project, .readiness-reasons li, .todo-item, .readiness-role):nth-child(5) { animation-delay: .2s; }
+:is(.discovery-listing, .job-row, .opp-card, .readiness-project, .readiness-reasons li, .todo-item, .readiness-role):nth-child(n + 6) { animation-delay: .25s; }
+.readiness-grade { animation-delay: .1s; }
+.readiness-score { animation-delay: .05s; }
+
+/* Score dial counts up: register --score so the conic gradient can animate */
+@property --score { syntax: "<number>"; inherits: true; initial-value: 0; }
+@keyframes bp-dial { from { --score: 0; } }
+.readiness-grade-dial { animation: bp-dial 1.1s cubic-bezier(.2, .7, .2, 1) .25s backwards; }
+
+/* Bars fill from the left */
+.readiness-bar span, .readiness-reasons-bar span, .resume-jobs, .discovery-reach { transform-origin: left center; }
+.readiness-bar span { animation: bp-grow-x .8s cubic-bezier(.2, .7, .2, 1) .2s backwards; }
+
+/* Selection feedback */
+.is-selected .discovery-check svg, .job-save.is-on svg, .opp-toggle.is-on svg, .readiness-reasons li.is-done .readiness-reason-icon svg { animation: bp-pop .3s ease-out; }
+.discovery-check, .job-save, .opp-toggle, .readiness-reason-fix, .todo-link, .resume-download, .opp-link { transition: background-color .18s, border-color .18s, color .18s, transform .18s, box-shadow .18s; }
+
+/* Buttons: gentle lift on hover, press on click */
+.button, .plain-button { transition: background-color .18s, border-color .18s, color .18s, transform .15s, box-shadow .18s; }
+.button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgb(240 90 50 / .22); }
+.button:active, .plain-button:active, .job-save:active, .opp-toggle:active, .readiness-reason-fix:active, .todo-link:active { transform: translateY(0) scale(.97); box-shadow: none; }
+
+/* Sidebar and tabs */
+.nav-item { transition: background-color .18s, color .18s, border-color .18s, padding-left .18s; }
+.nav-item:hover:not(.active) { padding-left: 16px; }
+.job-tabs button, .resume-toggle button { transition: color .18s, border-color .18s, background-color .2s; }
+
+/* Popups ease in with a fading backdrop */
+.role-dialog[open] { animation: bp-dialog-in .28s cubic-bezier(.2, .7, .2, 1); }
+.role-dialog[open]::backdrop { animation: bp-fade-in .28s ease-out; }
+
+/* Resume swaps cross-fade; job figure updates softly */
+.resume-doc { animation: bp-fade-in .35s ease-out; }
+.resume-jobs-number { transition: color .3s; }
+
+/* Links and chips */
+.readiness-project-more svg, .opp-link svg, .readiness-reason-fix svg, .todo-link svg { transition: transform .18s; }
+.readiness-project:hover .readiness-project-more svg, .opp-link:hover svg, .readiness-reason-fix:hover svg, .todo-link:hover svg { transform: translateX(3px); }
+.job-row { transition: background-color .15s, box-shadow .2s; }
+.readiness-chip { transition: background-color .18s, color .18s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after, *::backdrop { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
+  .button:hover, .nav-item:hover:not(.active) { transform: none; padding-left: 12px; }
+}
+
+/* Discover: cards rise into place one after another (stronger than the site-wide fade-up). */
+@keyframes bp-rise { from { opacity: 0; transform: translateY(48px); } to { opacity: 1; transform: none; } }
+.discovery-grid > .discovery-listing { animation: bp-rise .7s cubic-bezier(.16, 1, .3, 1) backwards; }
+.discovery-grid > .discovery-listing:nth-child(1) { animation-delay: .1s; }
+.discovery-grid > .discovery-listing:nth-child(2) { animation-delay: .22s; }
+.discovery-grid > .discovery-listing:nth-child(3) { animation-delay: .34s; }
+.discovery-grid > .discovery-listing:nth-child(4) { animation-delay: .46s; }
+.discovery-grid > .discovery-listing:nth-child(5) { animation-delay: .58s; }
+.discovery-grid > .discovery-listing:nth-child(n + 6) { animation-delay: .7s; }
+.discovery-reach { animation: bp-rise .7s cubic-bezier(.16, 1, .3, 1) .75s backwards; }
+@media (prefers-reduced-motion: reduce) {
+  .discovery-grid > .discovery-listing, .discovery-reach { animation: none; }
+}
+
+/* Onboarding screens (profile steps, Discover, Where you stand, resume):
+   each top-level block rises into place in order, instead of the whole page at once. */
+.onboarding-content { animation: none; }
+.onboarding-content > :not(dialog):not(.discovery-grid):not(.discovery-reach) {
+  animation: bp-rise .6s cubic-bezier(.16, 1, .3, 1) backwards;
+}
+.onboarding-content > :nth-child(2) { animation-delay: .08s; }
+.onboarding-content > :nth-child(3) { animation-delay: .16s; }
+.onboarding-content > :nth-child(4) { animation-delay: .24s; }
+.onboarding-content > :nth-child(5) { animation-delay: .32s; }
+.onboarding-content > :nth-child(6) { animation-delay: .4s; }
+.onboarding-content > :nth-child(7) { animation-delay: .48s; }
+.onboarding-content > :nth-child(n + 8) { animation-delay: .56s; }
+/* Discover: cards follow the heading, then the jobs box, buttons, and note. */
+.discovery-grid > .discovery-listing:nth-child(1) { animation-delay: .22s; }
+.discovery-grid > .discovery-listing:nth-child(2) { animation-delay: .32s; }
+.discovery-grid > .discovery-listing:nth-child(3) { animation-delay: .42s; }
+.discovery-grid > .discovery-listing:nth-child(4) { animation-delay: .52s; }
+.discovery-grid > .discovery-listing:nth-child(5) { animation-delay: .62s; }
+.discovery-grid > .discovery-listing:nth-child(n + 6) { animation-delay: .72s; }
+.discovery-page > .discovery-reach { animation-delay: .8s; }
+.discovery-page > .onboarding-actions { animation-delay: .88s; }
+.discovery-page > .local-storage-note { animation-delay: .94s; }
+/* Inner cards already rise with their section here, so skip their separate fade. */
+.onboarding-content :is(.readiness-role, .readiness-project, .readiness-reasons li, .todo-item, .readiness-panel, .readiness-grade, .readiness-score) { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-content > * { animation: none !important; }
+}
+
+/* Onboarding entrance, slower: longer rise and wider gaps between blocks. */
+.onboarding-content > :not(dialog):not(.discovery-grid):not(.discovery-reach) { animation-duration: 1.1s; }
+.onboarding-content > :nth-child(2) { animation-delay: .15s; }
+.onboarding-content > :nth-child(3) { animation-delay: .3s; }
+.onboarding-content > :nth-child(4) { animation-delay: .45s; }
+.onboarding-content > :nth-child(5) { animation-delay: .6s; }
+.onboarding-content > :nth-child(6) { animation-delay: .75s; }
+.onboarding-content > :nth-child(7) { animation-delay: .9s; }
+.onboarding-content > :nth-child(n + 8) { animation-delay: 1.05s; }
+.discovery-grid > .discovery-listing { animation-duration: 1.1s; }
+.discovery-grid > .discovery-listing:nth-child(1) { animation-delay: .4s; }
+.discovery-grid > .discovery-listing:nth-child(2) { animation-delay: .58s; }
+.discovery-grid > .discovery-listing:nth-child(3) { animation-delay: .76s; }
+.discovery-grid > .discovery-listing:nth-child(4) { animation-delay: .94s; }
+.discovery-grid > .discovery-listing:nth-child(5) { animation-delay: 1.12s; }
+.discovery-grid > .discovery-listing:nth-child(n + 6) { animation-delay: 1.3s; }
+.discovery-page > .discovery-reach { animation-duration: 1.1s; animation-delay: 1.45s; }
+.discovery-page > .onboarding-actions { animation-delay: 1.6s; }
+.discovery-page > .local-storage-note { animation-delay: 1.7s; }
+
+/* What you already have: grouped strengths */
+.have-groups { display: grid; gap: 18px; }
+.have-group h3 { margin-bottom: 2px; color: var(--muted); font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.have-group .readiness-list li { padding: 10px 0; }
+.have-group .readiness-list strong { font-size: 15.5px; }
+.have-group + .have-group { padding-top: 14px; border-top: 1px solid var(--line); }

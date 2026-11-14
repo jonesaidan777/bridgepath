@@ -1,6 +1,8 @@
+// Step 4 (Preferences) was removed; it stays in the type so older saved
+// profiles parked on it can be migrated to the last remaining step.
 export type OnboardingStep = 1 | 2 | 3 | 4 | 5;
 // Stable IDs preserve saved progress and edit links when the display order changes.
-export const ONBOARDING_STEPS = [5, 1, 2, 3, 4] as const;
+export const ONBOARDING_STEPS = [5, 1, 2, 3] as const;
 export type DegreeLevel = "associate" | "bachelor" | "master" | "doctoral";
 export type EnrollmentStatus = "full_time" | "part_time" | "not_enrolled";
 export type ExperienceKind =
@@ -66,6 +68,10 @@ export interface StudentProfile {
   consent: { saveDemographics: boolean };
   careerInterests: string[];
   interestedInternshipIds?: string[];
+  /** IDs of "What most students don't know" tips the student has checked off. */
+  completedTips?: string[];
+  /** Recommended project IDs the student has started, most recent first. */
+  startedProjects?: string[];
   education: {
     college: string;
     major: string;
@@ -241,9 +247,6 @@ export function validateProfileStep(
       if (!experience.title.trim())
         errors[`experience-${index}-title`] =
           "Enter a role or activity title, or remove this entry.";
-      if (experience.evidenceUrl && !validProfileUrl(experience.evidenceUrl))
-        errors[`experience-${index}-evidenceUrl`] =
-          "Use a full http:// or https:// evidence URL, or leave it blank.";
       if (experience.startMonth && !validMonth(experience.startMonth))
         errors[`experience-${index}-start`] = "Enter a valid month and year.";
       if (
@@ -272,27 +275,6 @@ export function validateProfileStep(
         errors[`project-${index}-url`] =
           "Use a full http:// or https:// URL, or leave it blank.";
     });
-  }
-  if (step === 4) {
-    const preferences = profile.preferences;
-    if (!uniqueEntries(preferences.targetRoles).length)
-      errors.targetRoles =
-        "Add at least one internship role or “Still exploring.”";
-    if (!preferences.workModes.length)
-      errors.workModes = "Choose at least one working arrangement.";
-    required(
-      "willingToRelocate",
-      preferences.willingToRelocate,
-      "Choose your relocation preference.",
-    );
-    required("season", preferences.season, "Choose a season or “Any season.”");
-    if (
-      !/^\d{4}$/.test(preferences.year) ||
-      Number(preferences.year) < now.getFullYear() ||
-      Number(preferences.year) > now.getFullYear() + 10
-    )
-      errors.year =
-        "Enter an internship year from this year through the next ten years.";
   }
   return errors;
 }
@@ -366,6 +348,12 @@ export function parseStoredProfile(raw: string | null): StudentProfile | null {
       careerInterests: strings(root.careerInterests),
       ...(root.interestedInternshipIds === undefined ? {} : {
         interestedInternshipIds: strings(root.interestedInternshipIds),
+      }),
+      ...(root.completedTips === undefined ? {} : {
+        completedTips: strings(root.completedTips),
+      }),
+      ...(root.startedProjects === undefined ? {} : {
+        startedProjects: strings(root.startedProjects),
       }),
       education: {
         college: text(education.college, 160),
@@ -504,7 +492,8 @@ export function parseStoredProfile(raw: string | null): StudentProfile | null {
         }),
       },
       onboarding: {
-        step: onboarding.step as OnboardingStep,
+        // Saved progress on the removed Preferences step resumes at Experience & skills.
+        step: (onboarding.step === 4 ? 3 : onboarding.step) as OnboardingStep,
         completed: boolean(onboarding.completed),
         completedAt:
           onboarding.completedAt === null
@@ -512,7 +501,7 @@ export function parseStoredProfile(raw: string | null): StudentProfile | null {
             : text(onboarding.completedAt, 40),
       },
     };
-    if (!ONBOARDING_STEPS.includes(profile.onboarding.step)) return null;
+    if (!(ONBOARDING_STEPS as readonly number[]).includes(profile.onboarding.step)) return null;
     // This milestone has no extraction engine; do not restore invented suggestions.
     if (profile.resume.suggestions.length) return null;
     if (
@@ -611,14 +600,9 @@ export function toCareerContext(profile: StudentProfile) {
       accomplishments: row.accomplishments ?? "",
     })),
     certifications: [...profile.certifications],
-    preferences: {
-      willingToRelocate: profile.preferences.willingToRelocate,
-      season: profile.preferences.season,
-      year: profile.preferences.year,
-      targetRoles: [...profile.preferences.targetRoles],
-      locations: [...profile.preferences.locations],
-      workModes: [...profile.preferences.workModes],
-    },
+    // Students no longer enter preferences, so saved values from older profiles
+    // are ignored; matching treats blank preferences as not recorded.
+    preferences: emptyProfile().preferences,
   };
 }
 

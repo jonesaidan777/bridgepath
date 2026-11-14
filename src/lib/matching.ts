@@ -302,7 +302,9 @@ export function evaluatePreferences(
           ? "aligned"
           : context.preferences.willingToRelocate === "yes"
             ? "aligned"
-            : "different",
+            : !context.preferences.locations.length
+              ? "unknown"
+              : "different",
     explanation:
       !location || !preferred.length || /^remote$/i.test(location.trim())
         ? "Location or a geographic preference is not specific enough to compare; the opportunity is not excluded."
@@ -310,7 +312,9 @@ export function evaluatePreferences(
           ? "The recorded location aligns with a preferred location (or your home city when none were chosen)."
           : context.preferences.willingToRelocate === "yes"
             ? "You are willing to relocate to a recorded location."
-            : `Recorded location differs from your preference. Relocation: ${context.preferences.willingToRelocate || "not recorded"}.`,
+            : !context.preferences.locations.length
+              ? "The recorded location is outside your home city; no location preference is recorded, so the opportunity is not excluded."
+              : `Recorded location differs from your preference. Relocation: ${context.preferences.willingToRelocate || "not recorded"}.`,
     evidence: location || "Location not provided.",
   });
   const text = `${job.requirements || ""}\n${job.program_details || ""}`;
@@ -332,13 +336,13 @@ export function evaluatePreferences(
     mode = "remote";
   signals.push({
     kind: "work_mode",
-    status: mode
+    status: mode && context.preferences.workModes.length
       ? context.preferences.workModes.includes(mode)
         ? "aligned"
         : "different"
       : "unknown",
     explanation: mode
-      ? `The role explicitly describes ${mode.replace("_", "-")} work${context.preferences.workModes.includes(mode) ? ", which you selected" : ", outside your selected arrangements"}.`
+      ? `The role explicitly describes ${mode.replace("_", "-")} work${!context.preferences.workModes.length ? "" : context.preferences.workModes.includes(mode) ? ", which you selected" : ", outside your selected arrangements"}.`
       : "Work arrangement is not clear; location alone is not treated as on-site.",
     evidence: mode
       ? location.match(/hybrid|on.?site|remote/i)
@@ -363,13 +367,13 @@ export function evaluatePreferences(
     /january through june/i.test(job.requirements || "");
   signals.push({
     kind: "year",
-    status: year
+    status: year && context.preferences.year
       ? year === context.preferences.year
         ? "aligned"
         : "different"
       : "unknown",
     explanation: year
-      ? `The recorded program year is ${year}${year === context.preferences.year ? ", your selected year" : `; you selected ${context.preferences.year}`}.`
+      ? `The recorded program year is ${year}${!context.preferences.year ? "" : year === context.preferences.year ? ", your selected year" : `; you selected ${context.preferences.year}`}.`
       : "The internship year is not unambiguous; verify the source schedule.",
     evidence:
       job.job_title || job.program_details || "Program year not provided.",
@@ -383,7 +387,7 @@ export function evaluatePreferences(
       ? "unknown"
       : context.preferences.season === "any"
         ? "aligned"
-        : season
+        : season && context.preferences.season
           ? season === context.preferences.season
             ? "aligned"
             : "different"
@@ -393,7 +397,7 @@ export function evaluatePreferences(
       : context.preferences.season === "any"
         ? "You are open to any internship season."
         : season
-          ? `The source names ${season}${season === context.preferences.season ? ", your selected season" : `; you selected ${context.preferences.season}`}.`
+          ? `The source names ${season}${!context.preferences.season ? "" : season === context.preferences.season ? ", your selected season" : `; you selected ${context.preferences.season}`}.`
           : "A clear internship season is not provided; no season is inferred from company location.",
     evidence: conflict
       ? job.requirements!

@@ -7,7 +7,7 @@ import { toCareerContext } from "@/lib/student-profile";
 import { matchInternship, type QualificationGroup } from "@/lib/matching";
 import { display, safeWebUrl } from "@/lib/data";
 import { careerFieldLabel } from "@/lib/profile-options";
-import snapshot from "@/data/bridgepath-workbook.json";
+import { workbook as snapshot } from "@/lib/workbook";
 import type { WorkbookDataset } from "@/lib/workbook-types";
 
 function Qualification({
@@ -79,7 +79,7 @@ function Qualification({
 }
 export function PersonalizedRole({
   internshipId,
-  backTo = "/my-opportunities",
+  backTo = "/career-insights",
   reviewRequirements = false,
 }: {
   internshipId: string;
@@ -111,7 +111,7 @@ export function PersonalizedRole({
     return (
       <div className="page-content">
         <h1>Role not available</h1>
-        <Link href="/my-opportunities">Back to My Opportunities</Link>
+        <Link href="/career-insights">Back to Career Insights</Link>
       </div>
     );
   const source = safeWebUrl(job.employer_posting_url);
@@ -127,9 +127,7 @@ export function PersonalizedRole({
     <div className="page-content detail-page">
       <Link href={backTo} className="back-link">
         <ArrowLeft size={18} />
-        {backTo === "/my-opportunities"
-          ? "Back to My Opportunities"
-          : "Back to Career Insights"}
+        Back to Career Insights
       </Link>
       <header className="page-heading">
         <p className="company-name">{display(job.company)}</p>

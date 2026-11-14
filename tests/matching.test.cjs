@@ -369,3 +369,19 @@ test("explicit graduation windows distinguish months within the same year", () =
     assert.equal(check.status, expected, date);
   }
 });
+
+test("readiness splits documented skills from gaps and never lowers the after-count", () => {
+  const { buildReadiness } = require("../src/lib/readiness.ts");
+  const p = student();
+  p.skills.canonicalIds = ["python"];
+  const ids = actual.Internships.slice(0, 3).map((job) => job.internship_id);
+  p.interestedInternshipIds = ids;
+  const r = buildReadiness(ctx(p), actual, ids);
+  assert.equal(r.roles.length, 3);
+  for (const gap of r.gaps)
+    assert.ok(!r.strengths.some((s) => s.skillId === gap.skillId && gap.classification === "required" && s.roles === r.roles.length));
+  assert.ok(r.strongAfter >= r.strongNow);
+  const order = { required: 0, preferred: 1, unspecified: 2 };
+  for (let i = 1; i < r.gaps.length; i++)
+    assert.ok(order[r.gaps[i - 1].classification] <= order[r.gaps[i].classification]);
+});

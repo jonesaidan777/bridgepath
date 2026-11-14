@@ -1,4 +1,4 @@
-import snapshot from "../data/bridgepath-workbook.json";
+import { workbook as snapshot } from "./workbook";
 import type {
   Project,
   StudentReportedSkills,

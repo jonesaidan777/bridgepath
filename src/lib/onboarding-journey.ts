@@ -5,7 +5,7 @@ export function journeyRedirect(stage: JourneyStage, pathname: string, profileCo
   if (stage === "profile") return pathname === "/onboarding" ? null : "/onboarding";
   if (stage === "discovery") {
     if (!profileCompleted) return "/onboarding";
-    return pathname === "/discover-opportunities" || pathname === "/onboarding"
+    return pathname === "/discover-opportunities" || pathname === "/your-fit" || pathname === "/your-resume" || pathname === "/onboarding"
       ? null : "/discover-opportunities";
   }
   return profileCompleted || pathname === "/onboarding" || pathname === "/profile"

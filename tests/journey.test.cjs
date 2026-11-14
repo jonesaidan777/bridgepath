@@ -20,6 +20,8 @@ test('discovery follows profile completion and dashboard opens only after finish
   assert.equal(journeyRedirect('discovery', '/discover-opportunities', true), null);
   assert.equal(journeyRedirect('discovery', '/discover-opportunities', false), '/onboarding');
   assert.equal(journeyRedirect('discovery', '/onboarding', true), null);
+  assert.equal(journeyRedirect('discovery', '/your-fit', true), null);
+  assert.equal(journeyRedirect('discovery', '/your-resume', true), null);
   assert.equal(journeyRedirect('complete', '/', true), null);
   assert.equal(journeyRedirect('complete', '/my-projects', true), null);
   assert.equal(journeyRedirect('complete', '/my-projects', false), '/onboarding');

@@ -1,65 +1,53 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Briefcase, Check, ChevronRight, MapPin } from "lucide-react";
 import { TransferableSkillsNote } from "./transferable-skills-note";
 import { useStudentProfile } from "./profile-provider";
+import { JourneyCrumbs } from "./journey-crumbs";
+import { RoleDialog } from "./role-dialog";
+import { requestAnalyzingIntro } from "./analyzing-screen";
+import { toRoleReadiness } from "@/lib/readiness";
 import { toCareerContext } from "@/lib/student-profile";
-import { rankInternships, matchInternship, type InternshipMatch, type QualificationGroup } from "@/lib/matching";
-import { display, safeWebUrl } from "@/lib/data";
-import { careerFieldLabel } from "@/lib/profile-options"; import snapshot from "@/data/bridgepath-workbook.json";
+import { rankInternships, matchInternship } from "@/lib/matching";
+import { display, getSharedSkillOpportunities } from "@/lib/data";
+import { careerFieldLabel } from "@/lib/profile-options"; import { workbook as snapshot } from "@/lib/workbook";
 import type { WorkbookDataset } from "@/lib/workbook-types";
+import { estimateJobs, formatJobCount } from "@/lib/job-estimates";
 
 const data = snapshot as WorkbookDataset;
 
-function QualificationEvidence({ group, documented }: { group: QualificationGroup; documented?: boolean }) {
-  return <li>
-    <details className="discovery-evidence">
-      <summary>
-        {documented
-          ? [...new Set(group.demonstrated.map(item => item.label))].join(", ")
-          : `${group.mode === "any" ? "One source-listed alternative: " : ""}${group.notDocumented.map(id => data.Skills.find(skill => skill.skill_id === id)?.skill_name || id).join(", ")}`}
-        <span className="requirement-type"> · {group.classification}</span>
-      </summary>
-      <div className="disclosure-content">
-        {documented && group.demonstrated.map((item, index) => <p key={index}><strong>{item.title}</strong> — {item.detail}</p>)}
-        {group.mode === "any" && <p>These are source-listed alternatives; all alternatives are not mandatory.</p>}
-        {group.evidence ? <blockquote>{group.evidence}</blockquote> : <p>Supporting quotation unavailable.</p>}
-      </div>
-    </details>
-  </li>;
+function companyInitials(name: string) {
+  const words = name.replace(/[^A-Za-z0-9 ]/g, " ").split(/\s+/).filter(Boolean);
+  return (words.length > 1 ? words[0][0] + words[1][0] : (words[0] ?? "?").slice(0, 2)).toUpperCase();
 }
 
-function RoleComparison({ match }: { match: InternshipMatch }) {
-  const documented = match.qualifications.filter(group => group.demonstrated.length);
-  const gaps = match.qualifications.filter(group => group.notDocumented.length);
-  const source = safeWebUrl(match.internship.employer_posting_url);
-  return <div className="disclosure-content">
-    <div className="discovery-comparison-grid">
-      <section>
-        <h3>What your profile documents</h3>
-        {documented.length ? <ul className="discovery-evidence-list">{documented.map((group, index) => <QualificationEvidence key={index} group={group} documented />)}</ul>
-          : <p>No requested skills are documented yet. Coursework and personal projects can provide evidence.</p>}
-        {match.relevantExperience.length > 0 && <details className="discovery-evidence"><summary>Related experience & projects</summary><ul>{match.relevantExperience.map(title => <li key={title}>{title}</li>)}</ul><p className="supporting-text">Relevance is not proof that every qualification is met. Skills count only when explicitly documented.</p></details>}
-      </section>
-      <section>
-        <h3>What to develop or document</h3>
-        <p className="supporting-text">Not yet documented does not mean you lack the skill. Preferred and unspecified mentions are not mandatory requirements.</p>
-        {gaps.length ? <ul className="discovery-evidence-list">{gaps.map((group, index) => <QualificationEvidence key={index} group={group}/>)}</ul>
-          : <p>No skill gaps were identified among the recorded requirements. Other employer conditions may still apply.</p>}
-      </section>
+function SelectedReach({ selectedIds, fromSelection }: { selectedIds: string[]; fromSelection: boolean }) {
+  const chosen = new Set(selectedIds);
+  const related = new Map<string, string>();
+  for (const id of selectedIds) {
+    const own = data.Internships.find(job => job.internship_id === id);
+    if (own?.career_field) related.set(`self:${id}`, own.career_field);
+    for (const { internship } of getSharedSkillOpportunities(id) ?? [])
+      if (!chosen.has(internship.internship_id)) related.set(internship.internship_id, internship.career_field || "");
+  }
+  if (!related.size) return null;
+  const fields = [...new Set(related.values())].filter(Boolean).map(field => careerFieldLabel(field));
+  const jobs = formatJobCount(estimateJobs(related.size));
+  return <section className="discovery-reach" aria-label="Where your selected roles lead">
+    <p className="discovery-reach-number">{jobs}</p>
+    <div>
+      <p className="discovery-reach-text">
+        {fromSelection
+          ? <>The {selectedIds.length === 1 ? "job you selected matches" : "jobs you selected match"} requirements for <strong>{jobs} jobs</strong> in {fields.join(" and ")}.</>
+          : <>Your top matches line up with requirements for <strong>{jobs} jobs</strong> in {fields.join(" and ")}.</>}
+      </p>
+      <p className="supporting-text">{fromSelection
+        ? "Build these skills once and they count toward all of them."
+        : "Select the jobs that interest you to see where your choices lead."}</p>
     </div>
-    <details className="discovery-evidence">
-      <summary>Education conditions & eligibility questions</summary>
-      <div className="disclosure-content">{match.eligibility.map((check, index) => <div className="discovery-eligibility" key={index}>
-        <h3>{check.status === "confirmed" ? "Documented alignment" : check.status === "unmet" ? "Explicit condition differs" : "Needs verification"} <span className="requirement-type"> · {check.classification}</span></h3>
-        <p>{check.explanation}</p><blockquote>{check.evidence}</blockquote>
-      </div>)}</div>
-    </details>
-    <p className="project-fit"><strong>Suggested next step:</strong> {match.nextAction.explanation}</p>
-    {source && <p><a href={source} className="text-link" target="_blank" rel="noopener noreferrer">Read original employer posting<span className="sr-only"> (opens in a new tab)</span></a></p>}
-  </div>;
+  </section>;
 }
 
 export function OpportunityDiscovery() {
@@ -67,6 +55,7 @@ export function OpportunityDiscovery() {
   const router = useRouter();
   const context = useMemo(() => toCareerContext(profile), [profile]);
   const matches = useMemo(() => rankInternships(context, data, 5), [context]);
+  const [openRoleId, setOpenRoleId] = useState<string | null>(null);
   const selected = useMemo(() => data.Internships
     .filter(job => context.interestedInternshipIds.includes(job.internship_id))
     .map(job => matchInternship(context, job, data)), [context]);
@@ -78,52 +67,60 @@ export function OpportunityDiscovery() {
   }
   function finishJourney() {
     setJourneyStage("complete");
-    router.push("/");
+    router.push("/career-insights");
   }
   function editProfile() {
     setJourneyStage("profile");
     router.push("/onboarding?edit=1");
   }
   return <div className="onboarding-content discovery-page">
-    <p className="setup-step">Your profile → Your opportunities → Your direction</p>
+    <JourneyCrumbs current="opportunities"/>
     <header className="page-heading">
       <h1>Discover your next opportunity</h1>
       <p>Choose the internships that interest you most. We’ll use your choices to focus the projects that help you build relevant experience.</p>
     </header>
-    <p className="availability-note">Up to five roles from {snapshot.metadata.source}, matched to your profile. These cached postings are not verified as accepting applications. Recommendations are not eligibility guarantees.</p>
-    <section className="readable-list" aria-label="Your top internship recommendations">
+    <section className="discovery-grid" aria-label="Your top internship recommendations">
       {matches.map(match => {
         const job = match.internship;
         const checked = context.interestedInternshipIds.includes(job.internship_id);
-        return <article key={job.internship_id} className={`listing discovery-listing${checked ? " is-selected" : ""}`}>
-          <p className="company-name">{display(job.company)}</p>
-          <h2>{display(job.job_title)}</h2>
-          <p className="location">{display(job.location)} · {careerFieldLabel(job.career_field || "")}</p>
-          <p className="project-description role-preview">{display(job.job_description_summary)}</p>
-          <p className="discovery-reason">{match.reasons[0]}</p>
-          <p className="supporting-text">{match.type === "strong_current" ? "Strong current match based on documented evidence" : "Interest-aligned stretch opportunity"}{match.eligibilityStatus === "uncertain" ? " · Eligibility needs verification" : ""}</p>
+        return <article key={job.internship_id} className={`discovery-listing${checked ? " is-selected" : ""}`}>
+          <button type="button" className="discovery-select" aria-pressed={checked} onClick={() => toggleInterest(job.internship_id)}>
+            <span className="sr-only">{checked ? "Deselect" : "Select"} {display(job.job_title)} at {display(job.company)}</span>
+          </button>
+          <div className="discovery-card-head">
+            <span className="discovery-logo" aria-hidden="true">{companyInitials(display(job.company))}</span>
+            <p className="discovery-company">{display(job.company)}</p>
+            <span className="discovery-check" aria-hidden="true">{checked && <Check size={14} strokeWidth={3}/>}</span>
+          </div>
+          <h2>
+            <button type="button" className="discovery-title-link" onClick={() => setOpenRoleId(job.internship_id)}>
+              {display(job.job_title)}<ChevronRight size={18} aria-hidden="true"/>
+              <span className="sr-only"> — view role details</span>
+            </button>
+          </h2>
+          <ul className="discovery-tags" aria-label="Role details">
+            <li><Briefcase size={14} aria-hidden="true"/>{careerFieldLabel(job.career_field || "")}</li>
+            <li><MapPin size={14} aria-hidden="true"/>{display(job.location)}</li>
+          </ul>
           <TransferableSkillsNote internshipId={job.internship_id} careerField={job.career_field} />
-          <label className="discovery-interest"><input type="checkbox" checked={checked} onChange={() => toggleInterest(job.internship_id)}/><span>{checked ? "Selected — this interests me" : "This interests me"}<span className="sr-only">: {job.job_title} at {job.company}</span></span></label>
         </article>;
       })}
       {!matches.length && <div className="empty-state"><h2>No suitable shortlist in this sample yet</h2><p>Your interests or explicit eligibility conditions may not overlap this workbook. We won’t fill the list with unrelated roles.</p><button type="button" className="plain-button" onClick={editProfile}>Review your profile</button></div>}
       {matches.length > 0 && matches.length < 5 && <p className="supporting-text">Only {matches.length} suitable roles were found. This sample does not support five relevant recommendations for your current profile.</p>}
     </section>
-    <section id="selected-role-comparison" className="discovery-comparison" aria-labelledby="comparison-title">
-      <h2 id="comparison-title">Your experience. Their requirements.</h2>
-      <p role="status" aria-live="polite" className="discovery-selection-count">{selected.length ? `${selected.length} ${selected.length === 1 ? "role selected" : "roles selected"}. Your interests are saved in this browser.` : "Select a role above to compare your starting point with its requirements."}</p>
-      {selected.length > 0 && <p className="supporting-text">This reflects profile information, including any demo values you kept. Nothing has been verified or extracted from a resume.</p>}
-      {selected.map(match => <details className="disclosure discovery-role-comparison" key={match.internship.internship_id} open={selected.length === 1}>
-        <summary>{display(match.internship.company)} — {display(match.internship.job_title)}</summary>
-        {(!matches.some(item => item.internship.internship_id === match.internship.internship_id) || match.type === "explicitly_unmet") && <p className="profile-inline-notice">This saved interest is no longer in your top shortlist. Review its conditions against your updated profile.</p>}
-        <RoleComparison match={match}/>
-        <button className="plain-button" type="button" onClick={() => toggleInterest(match.internship.internship_id)}>Remove this selection<span className="sr-only">: {match.internship.job_title}</span></button>
-      </details>)}
-    </section>
+    {(selected.length > 0 || matches.length > 0) && <SelectedReach
+      fromSelection={selected.length > 0}
+      selectedIds={(selected.length ? selected : matches).map(match => match.internship.internship_id)}/>}
+    {(() => {
+      const open = matches.find(match => match.internship.internship_id === openRoleId);
+      return <RoleDialog role={open ? toRoleReadiness(open, data, { hasInternship: profile.experiences.some(row => row.kind === "internship") }) : null} onClose={() => setOpenRoleId(null)}/>;
+    })()}
     <div className="onboarding-actions">
       <button type="button" className="plain-button" onClick={editProfile}><ArrowLeft size={18}/>Back to profile</button>
-      <button type="button" className="button" onClick={finishJourney}>{selected.length ? "Continue with these interests" : "Continue without selecting"}<ArrowRight size={18}/></button>
+      {selected.length
+        ? <button type="button" className="button" onClick={() => { requestAnalyzingIntro(); router.push("/your-fit"); }}>See where you stand<ArrowRight size={18}/></button>
+        : <button type="button" className="button" onClick={finishJourney}>Continue without selecting<ArrowRight size={18}/></button>}
     </div>
-    <p className="local-storage-note">Your choices guide My Projects after this journey. Reloading restarts at Resume and keeps your saved answers and interests.</p>
+    <p className="local-storage-note">Pick roles to see what you already bring and what to build next. Your choices guide My Projects after this journey. Reloading restarts at Resume and keeps your saved answers and interests.</p>
   </div>;
 }

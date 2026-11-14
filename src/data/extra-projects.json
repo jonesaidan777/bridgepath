@@ -1,0 +1,727 @@
+{
+  "_note": "BridgePath-authored projects merged with the workbook import. Edit here; the workbook import does not overwrite this file.",
+  "Projects": [
+    {
+      "project_id": "PRJ-101",
+      "career_field": "software_engineering",
+      "title": "Containerized Task Tracker API",
+      "description": "Build a small REST API for a to-do or study-task tracker backed by a SQL database, package it with Docker, and run its tests automatically on every push.",
+      "target_skill_ids": "python|rest_apis|sql|docker|git|ci_cd",
+      "final_deliverable": "A GitHub repository with the API, a Dockerfile and docker-compose setup, automated tests running in GitHub Actions, and a README with example requests."
+    },
+    {
+      "project_id": "PRJ-102",
+      "career_field": "software_engineering",
+      "title": "Campus Events Web App",
+      "description": "Create a React front end that lists campus events from your own API, with search, filters, and a saved-events view, plus a simple service that integrates a public calendar feed.",
+      "target_skill_ids": "react|javascript_typescript|rest_apis|system_integrations|git",
+      "final_deliverable": "A deployed web app link and repository with the React client, the integration service, and a short write-up of how the calendar data is synced."
+    },
+    {
+      "project_id": "PRJ-103",
+      "career_field": "data_science_ai_ml",
+      "title": "Course Success Predictor",
+      "description": "Use an openly licensed student-performance dataset to explore what predicts course outcomes, then train and evaluate a simple machine learning model with clear, honest metrics.",
+      "target_skill_ids": "python|machine_learning|statistics|data_analysis|pandas",
+      "final_deliverable": "A Jupyter notebook and short report covering data cleaning, exploratory analysis, model comparison, evaluation metrics, and limitations."
+    },
+    {
+      "project_id": "PRJ-104",
+      "career_field": "data_science_ai_ml",
+      "title": "SQL-Powered Transit Dashboard",
+      "description": "Load public transit ridership or delay data into a SQL database, write analysis queries, and present the findings in a small dashboard with charts.",
+      "target_skill_ids": "sql|python|data_analysis|data_visualization|statistics",
+      "final_deliverable": "A repository with the database load script, documented SQL queries, a dashboard or notebook of charts, and a one-page findings summary."
+    },
+    {
+      "project_id": "PRJ-105",
+      "career_field": "product_management",
+      "title": "Campus App Product Brief",
+      "description": "Pick a real pain point for students on your campus, research it with a short survey and interviews, and write a product requirements document with user stories and a roadmap.",
+      "target_skill_ids": "market_research|product_requirements|user_stories|product_roadmap|data_analysis",
+      "final_deliverable": "A product requirements document with survey results, prioritized user stories, a three-release roadmap, and success metrics."
+    },
+    {
+      "project_id": "PRJ-106",
+      "career_field": "product_management",
+      "title": "Feature Sizing Model in Excel",
+      "description": "Build a spreadsheet model that estimates the cost and impact of three competing features for an existing app, and write a technical spec for the winner.",
+      "target_skill_ids": "excel|business_fundamentals|technical_specifications|api_design|data_analysis",
+      "final_deliverable": "An Excel model with documented assumptions, a one-page recommendation, and a technical specification including a draft API outline."
+    },
+    {
+      "project_id": "PRJ-107",
+      "career_field": "quant_finance",
+      "title": "Moving-Average Strategy Backtest",
+      "description": "Use free historical price data to backtest a simple moving-average crossover strategy, compare it to buy-and-hold, and explain the results with basic statistics.",
+      "target_skill_ids": "python|pandas|backtesting|statistics|financial_markets|data_visualization",
+      "final_deliverable": "A notebook with the backtest, performance charts, risk and return statistics, and a written discussion of assumptions and pitfalls. No live trading."
+    },
+    {
+      "project_id": "PRJ-108",
+      "career_field": "quant_finance",
+      "title": "Portfolio Risk Calculator",
+      "description": "Build a tool that takes a small stock portfolio, estimates its volatility and correlation using linear algebra, and shows how diversification changes risk.",
+      "target_skill_ids": "python|linear_algebra|statistics|quantitative_modeling|sql",
+      "final_deliverable": "A command-line or notebook tool with a covariance-based risk model, example portfolios stored in SQL, and a short methods write-up."
+    },
+    {
+      "project_id": "PRJ-109",
+      "career_field": "hardware_engineering",
+      "title": "Arduino Environmental Sensor Logger",
+      "description": "Wire temperature and light sensors to a microcontroller, write C/C++ firmware to sample them, and log the data to your computer for analysis in Python.",
+      "target_skill_ids": "c_cpp|embedded_systems|data_acquisition|python|hands_on_lab_work",
+      "final_deliverable": "Firmware source, a wiring diagram, a Python logging and plotting script, and a short report on sensor accuracy."
+    },
+    {
+      "project_id": "PRJ-110",
+      "career_field": "hardware_engineering",
+      "title": "Automated Circuit Test Bench",
+      "description": "Design a simple filter or voltage-divider circuit, then automate measurements with Python so the bench records and compares readings against your design calculations.",
+      "target_skill_ids": "circuit_design|lab_equipment|instrument_automation|python|device_characterization",
+      "final_deliverable": "A schematic, a measurement automation script, recorded data, and a report comparing measured and expected behavior."
+    },
+    {
+      "project_id": "PRJ-111",
+      "career_field": "data_science_ai_ml",
+      "title": "App Engagement KPI Report",
+      "description": "Define the key metrics for a sample app, compute them from a public or synthetic event log with SQL, and present a weekly KPI report that explains what changed and why.",
+      "target_skill_ids": "product_analytics|kpi_reporting|sql|data_visualization|data_analysis",
+      "final_deliverable": "A SQL query pack, a KPI dashboard or notebook, and a one-page weekly report with insights and recommended actions."
+    },
+    {
+      "project_id": "PRJ-112",
+      "career_field": "data_science_ai_ml",
+      "title": "AI-Assisted Data Cleaning Notebook",
+      "description": "Clean a messy public dataset with help from an AI coding assistant, verifying every suggestion with tests, and document where the assistant helped and where it was wrong.",
+      "target_skill_ids": "ai_assisted_development|python|pandas|data_analysis",
+      "final_deliverable": "A notebook with the cleaning pipeline, validation checks, and a log comparing AI suggestions with what you kept."
+    },
+    {
+      "project_id": "PRJ-113",
+      "career_field": "data_science_ai_ml",
+      "title": "Game Outcome Probability Model",
+      "description": "Use public historical sports results to estimate win probabilities with a statistical model, then check how well-calibrated the predictions are.",
+      "target_skill_ids": "statistics|machine_learning|python|data_visualization",
+      "final_deliverable": "A notebook with the model, calibration charts, and a write-up comparing your probabilities to actual outcomes."
+    },
+    {
+      "project_id": "PRJ-114",
+      "career_field": "software_engineering",
+      "title": "Serverless Study Timer on AWS",
+      "description": "Build a small study-timer API with Node.js, deploy it to AWS using managed services, and describe the cloud setup in code so anyone can recreate it.",
+      "target_skill_ids": "aws|cloud_platforms|cloud_infrastructure|nodejs|rest_apis",
+      "final_deliverable": "A repository with the Node.js API, infrastructure-as-code templates, a live endpoint, and an architecture diagram."
+    },
+    {
+      "project_id": "PRJ-115",
+      "career_field": "software_engineering",
+      "title": "Algorithms Visualizer",
+      "description": "Build a React app that animates sorting and graph-search algorithms step by step, with notes on time and space complexity.",
+      "target_skill_ids": "data_structures_algorithms|javascript_typescript|react|git",
+      "final_deliverable": "A deployed web app and repository with at least four animated algorithms, unit tests for each, and complexity notes."
+    }
+  ],
+  "Milestones": [
+    {
+      "milestone_id": "MS-101-1",
+      "project_id": "PRJ-101",
+      "step_number": 1,
+      "title": "Design the API",
+      "instructions": "List the resources (tasks, users) and write out each endpoint with its method, inputs, and responses before coding.",
+      "deliverable": "An API design section in the README",
+      "resource_title": "FastAPI tutorial",
+      "resource_url": "https://fastapi.tiangolo.com/tutorial/"
+    },
+    {
+      "milestone_id": "MS-101-2",
+      "project_id": "PRJ-101",
+      "step_number": 2,
+      "title": "Build endpoints on a SQL database",
+      "instructions": "Implement create, read, update, and delete endpoints that store tasks in SQLite or PostgreSQL.",
+      "deliverable": "Working endpoints and a schema file",
+      "resource_title": "PostgreSQL tutorial",
+      "resource_url": "https://www.postgresql.org/docs/current/tutorial.html"
+    },
+    {
+      "milestone_id": "MS-101-3",
+      "project_id": "PRJ-101",
+      "step_number": 3,
+      "title": "Containerize it",
+      "instructions": "Write a Dockerfile and docker-compose file so the API and database start with one command.",
+      "deliverable": "Dockerfile and docker-compose.yml",
+      "resource_title": "Docker: Get started",
+      "resource_url": "https://docs.docker.com/get-started/"
+    },
+    {
+      "milestone_id": "MS-101-4",
+      "project_id": "PRJ-101",
+      "step_number": 4,
+      "title": "Automate tests",
+      "instructions": "Write tests for each endpoint and run them in GitHub Actions on every push.",
+      "deliverable": "Test suite and a passing CI badge",
+      "resource_title": "GitHub Actions documentation",
+      "resource_url": "https://docs.github.com/en/actions"
+    },
+    {
+      "milestone_id": "MS-102-1",
+      "project_id": "PRJ-102",
+      "step_number": 1,
+      "title": "Sketch the screens",
+      "instructions": "Draw the event list, filters, and saved-events views, and decide what data each needs.",
+      "deliverable": "Wireframes in the README",
+      "resource_title": "React: Thinking in React",
+      "resource_url": "https://react.dev/learn/thinking-in-react"
+    },
+    {
+      "milestone_id": "MS-102-2",
+      "project_id": "PRJ-102",
+      "step_number": 2,
+      "title": "Build the React client",
+      "instructions": "Build components for the list, search, and filters, loading data from a mock API first.",
+      "deliverable": "A working client with mock data",
+      "resource_title": "React: Quick start",
+      "resource_url": "https://react.dev/learn"
+    },
+    {
+      "milestone_id": "MS-102-3",
+      "project_id": "PRJ-102",
+      "step_number": 3,
+      "title": "Integrate a calendar feed",
+      "instructions": "Write a small service that pulls a public calendar feed, normalizes the events, and serves them as JSON.",
+      "deliverable": "Integration service with sample output",
+      "resource_title": "Node.js: Introduction",
+      "resource_url": "https://nodejs.org/en/learn/getting-started/introduction-to-nodejs"
+    },
+    {
+      "milestone_id": "MS-102-4",
+      "project_id": "PRJ-102",
+      "step_number": 4,
+      "title": "Deploy and document",
+      "instructions": "Deploy the app and write a README covering setup, architecture, and known limits.",
+      "deliverable": "Live link and README",
+      "resource_title": "MDN: Deploying a website",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/Publishing_your_website"
+    },
+    {
+      "milestone_id": "MS-103-1",
+      "project_id": "PRJ-103",
+      "step_number": 1,
+      "title": "Explore the data",
+      "instructions": "Load the dataset with pandas, check for missing values, and chart how each feature relates to outcomes.",
+      "deliverable": "Exploratory analysis section",
+      "resource_title": "pandas: Getting started",
+      "resource_url": "https://pandas.pydata.org/docs/getting_started/index.html"
+    },
+    {
+      "milestone_id": "MS-103-2",
+      "project_id": "PRJ-103",
+      "step_number": 2,
+      "title": "Set a baseline",
+      "instructions": "Split train and test data and measure a simple baseline so you know what “better” means.",
+      "deliverable": "Baseline results table",
+      "resource_title": "scikit-learn: Getting started",
+      "resource_url": "https://scikit-learn.org/stable/getting_started.html"
+    },
+    {
+      "milestone_id": "MS-103-3",
+      "project_id": "PRJ-103",
+      "step_number": 3,
+      "title": "Train and compare models",
+      "instructions": "Train two or three models, compare them with cross-validation, and pick one with a clear reason.",
+      "deliverable": "Model comparison with metrics",
+      "resource_title": "scikit-learn: Model evaluation",
+      "resource_url": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+    },
+    {
+      "milestone_id": "MS-103-4",
+      "project_id": "PRJ-103",
+      "step_number": 4,
+      "title": "Report honestly",
+      "instructions": "Write up findings, limitations, and any fairness concerns in plain language.",
+      "deliverable": "Two-page report",
+      "resource_title": "Google: Machine Learning Crash Course",
+      "resource_url": "https://developers.google.com/machine-learning/crash-course"
+    },
+    {
+      "milestone_id": "MS-104-1",
+      "project_id": "PRJ-104",
+      "step_number": 1,
+      "title": "Load the data",
+      "instructions": "Download a public transit dataset and load it into SQLite or PostgreSQL with a script.",
+      "deliverable": "Load script and schema",
+      "resource_title": "SQLite documentation",
+      "resource_url": "https://www.sqlite.org/docs.html"
+    },
+    {
+      "milestone_id": "MS-104-2",
+      "project_id": "PRJ-104",
+      "step_number": 2,
+      "title": "Ask questions in SQL",
+      "instructions": "Write at least five queries that answer real questions, such as which routes are most delayed and when.",
+      "deliverable": "Documented .sql file",
+      "resource_title": "PostgreSQL tutorial",
+      "resource_url": "https://www.postgresql.org/docs/current/tutorial.html"
+    },
+    {
+      "milestone_id": "MS-104-3",
+      "project_id": "PRJ-104",
+      "step_number": 3,
+      "title": "Visualize results",
+      "instructions": "Turn your query results into clear charts with titles, labels, and units.",
+      "deliverable": "Chart notebook or dashboard",
+      "resource_title": "Matplotlib tutorials",
+      "resource_url": "https://matplotlib.org/stable/tutorials/index.html"
+    },
+    {
+      "milestone_id": "MS-104-4",
+      "project_id": "PRJ-104",
+      "step_number": 4,
+      "title": "Summarize findings",
+      "instructions": "Write a one-page summary with your top three findings and how confident you are in each.",
+      "deliverable": "Findings summary",
+      "resource_title": "pandas: Getting started",
+      "resource_url": "https://pandas.pydata.org/docs/getting_started/index.html"
+    },
+    {
+      "milestone_id": "MS-105-1",
+      "project_id": "PRJ-105",
+      "step_number": 1,
+      "title": "Research the problem",
+      "instructions": "Run a short survey of 20+ students and five quick interviews about one campus pain point.",
+      "deliverable": "Survey results and interview notes",
+      "resource_title": "Atlassian: Product management guide",
+      "resource_url": "https://www.atlassian.com/agile/product-management"
+    },
+    {
+      "milestone_id": "MS-105-2",
+      "project_id": "PRJ-105",
+      "step_number": 2,
+      "title": "Write user stories",
+      "instructions": "Turn your research into prioritized user stories with acceptance criteria.",
+      "deliverable": "Prioritized user story list",
+      "resource_title": "Atlassian: User stories",
+      "resource_url": "https://www.atlassian.com/agile/project-management/user-stories"
+    },
+    {
+      "milestone_id": "MS-105-3",
+      "project_id": "PRJ-105",
+      "step_number": 3,
+      "title": "Draft the PRD",
+      "instructions": "Write the problem, goals, non-goals, requirements, and success metrics in a requirements document.",
+      "deliverable": "Product requirements document",
+      "resource_title": "Atlassian: Product requirements",
+      "resource_url": "https://www.atlassian.com/agile/product-management/requirements"
+    },
+    {
+      "milestone_id": "MS-105-4",
+      "project_id": "PRJ-105",
+      "step_number": 4,
+      "title": "Plan the roadmap",
+      "instructions": "Group stories into three releases and explain the order you chose.",
+      "deliverable": "Three-release roadmap",
+      "resource_title": "Atlassian: Product roadmaps",
+      "resource_url": "https://www.atlassian.com/agile/product-management/product-roadmaps"
+    },
+    {
+      "milestone_id": "MS-106-1",
+      "project_id": "PRJ-106",
+      "step_number": 1,
+      "title": "Define the options",
+      "instructions": "Pick an app you use and describe three feature ideas with their target users.",
+      "deliverable": "Feature option summaries",
+      "resource_title": "Atlassian: Prioritization frameworks",
+      "resource_url": "https://www.atlassian.com/agile/product-management/prioritization-framework"
+    },
+    {
+      "milestone_id": "MS-106-2",
+      "project_id": "PRJ-106",
+      "step_number": 2,
+      "title": "Build the Excel model",
+      "instructions": "Estimate reach, impact, effort, and cost for each feature with clearly labeled assumptions.",
+      "deliverable": "Excel sizing model",
+      "resource_title": "Microsoft: Excel training",
+      "resource_url": "https://support.microsoft.com/en-us/excel"
+    },
+    {
+      "milestone_id": "MS-106-3",
+      "project_id": "PRJ-106",
+      "step_number": 3,
+      "title": "Recommend one",
+      "instructions": "Write a one-page recommendation that uses the model and names the biggest risks.",
+      "deliverable": "One-page recommendation",
+      "resource_title": "Atlassian: Product management guide",
+      "resource_url": "https://www.atlassian.com/agile/product-management"
+    },
+    {
+      "milestone_id": "MS-106-4",
+      "project_id": "PRJ-106",
+      "step_number": 4,
+      "title": "Write the tech spec",
+      "instructions": "Describe the winning feature's data, screens, and a draft API with example requests.",
+      "deliverable": "Technical specification",
+      "resource_title": "OpenAPI: Getting started",
+      "resource_url": "https://learn.openapis.org/"
+    },
+    {
+      "milestone_id": "MS-107-1",
+      "project_id": "PRJ-107",
+      "step_number": 1,
+      "title": "Get price data",
+      "instructions": "Download several years of daily prices for one index fund and load them with pandas.",
+      "deliverable": "Clean price DataFrame",
+      "resource_title": "pandas: Time series",
+      "resource_url": "https://pandas.pydata.org/docs/user_guide/timeseries.html"
+    },
+    {
+      "milestone_id": "MS-107-2",
+      "project_id": "PRJ-107",
+      "step_number": 2,
+      "title": "Code the strategy",
+      "instructions": "Compute short and long moving averages and generate buy and sell signals without look-ahead bias.",
+      "deliverable": "Signal generation code",
+      "resource_title": "pandas: Window operations",
+      "resource_url": "https://pandas.pydata.org/docs/user_guide/window.html"
+    },
+    {
+      "milestone_id": "MS-107-3",
+      "project_id": "PRJ-107",
+      "step_number": 3,
+      "title": "Backtest and compare",
+      "instructions": "Simulate returns with transaction costs and compare against buy-and-hold.",
+      "deliverable": "Backtest results and charts",
+      "resource_title": "Matplotlib tutorials",
+      "resource_url": "https://matplotlib.org/stable/tutorials/index.html"
+    },
+    {
+      "milestone_id": "MS-107-4",
+      "project_id": "PRJ-107",
+      "step_number": 4,
+      "title": "Measure risk",
+      "instructions": "Report annualized return, volatility, Sharpe ratio, and max drawdown, and discuss overfitting.",
+      "deliverable": "Risk and return write-up",
+      "resource_title": "Investor.gov: Investing basics",
+      "resource_url": "https://www.investor.gov/introduction-investing"
+    },
+    {
+      "milestone_id": "MS-108-1",
+      "project_id": "PRJ-108",
+      "step_number": 1,
+      "title": "Store sample portfolios",
+      "instructions": "Create a small SQL table of example portfolios with tickers and weights.",
+      "deliverable": "Portfolio table and seed script",
+      "resource_title": "SQLite documentation",
+      "resource_url": "https://www.sqlite.org/docs.html"
+    },
+    {
+      "milestone_id": "MS-108-2",
+      "project_id": "PRJ-108",
+      "step_number": 2,
+      "title": "Estimate the covariance matrix",
+      "instructions": "Compute daily returns and the covariance matrix for the holdings.",
+      "deliverable": "Covariance calculation code",
+      "resource_title": "NumPy: Linear algebra",
+      "resource_url": "https://numpy.org/doc/stable/reference/routines.linalg.html"
+    },
+    {
+      "milestone_id": "MS-108-3",
+      "project_id": "PRJ-108",
+      "step_number": 3,
+      "title": "Compute portfolio risk",
+      "instructions": "Use the weights and covariance matrix to compute portfolio volatility, and show how it changes as you diversify.",
+      "deliverable": "Risk results with a diversification chart",
+      "resource_title": "NumPy: Absolute basics",
+      "resource_url": "https://numpy.org/doc/stable/user/absolute_beginners.html"
+    },
+    {
+      "milestone_id": "MS-108-4",
+      "project_id": "PRJ-108",
+      "step_number": 4,
+      "title": "Write up the method",
+      "instructions": "Explain the model, its assumptions, and where it can mislead.",
+      "deliverable": "Methods write-up",
+      "resource_title": "Investor.gov: Diversification",
+      "resource_url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/diversify-your-investments"
+    },
+    {
+      "milestone_id": "MS-109-1",
+      "project_id": "PRJ-109",
+      "step_number": 1,
+      "title": "Wire the sensors",
+      "instructions": "Connect a temperature sensor and a light sensor to the microcontroller and draw the wiring diagram.",
+      "deliverable": "Wiring diagram and photo",
+      "resource_title": "Arduino: Learn",
+      "resource_url": "https://docs.arduino.cc/learn/"
+    },
+    {
+      "milestone_id": "MS-109-2",
+      "project_id": "PRJ-109",
+      "step_number": 2,
+      "title": "Write the firmware",
+      "instructions": "Write C/C++ firmware that samples both sensors on a fixed interval and prints readings over serial.",
+      "deliverable": "Firmware source",
+      "resource_title": "Arduino: Language reference",
+      "resource_url": "https://docs.arduino.cc/language-reference/"
+    },
+    {
+      "milestone_id": "MS-109-3",
+      "project_id": "PRJ-109",
+      "step_number": 3,
+      "title": "Log data in Python",
+      "instructions": "Read the serial stream in Python, save it to CSV, and plot readings over time.",
+      "deliverable": "Logging and plotting script",
+      "resource_title": "pySerial documentation",
+      "resource_url": "https://pyserial.readthedocs.io/en/latest/"
+    },
+    {
+      "milestone_id": "MS-109-4",
+      "project_id": "PRJ-109",
+      "step_number": 4,
+      "title": "Check accuracy",
+      "instructions": "Compare your readings to a reference thermometer and report the error.",
+      "deliverable": "Accuracy report",
+      "resource_title": "Matplotlib tutorials",
+      "resource_url": "https://matplotlib.org/stable/tutorials/index.html"
+    },
+    {
+      "milestone_id": "MS-110-1",
+      "project_id": "PRJ-110",
+      "step_number": 1,
+      "title": "Design the circuit",
+      "instructions": "Design an RC filter or voltage divider and calculate its expected behavior.",
+      "deliverable": "Schematic and calculations",
+      "resource_title": "KiCad documentation",
+      "resource_url": "https://docs.kicad.org/"
+    },
+    {
+      "milestone_id": "MS-110-2",
+      "project_id": "PRJ-110",
+      "step_number": 2,
+      "title": "Build and measure by hand",
+      "instructions": "Build the circuit and take a few manual readings with a multimeter or oscilloscope.",
+      "deliverable": "Manual measurement log",
+      "resource_title": "SparkFun: How to use a multimeter",
+      "resource_url": "https://learn.sparkfun.com/tutorials/how-to-use-a-multimeter/all"
+    },
+    {
+      "milestone_id": "MS-110-3",
+      "project_id": "PRJ-110",
+      "step_number": 3,
+      "title": "Automate measurements",
+      "instructions": "Use Python to control the instrument or a data-acquisition board and record a sweep of readings.",
+      "deliverable": "Automation script and data file",
+      "resource_title": "PyVISA documentation",
+      "resource_url": "https://pyvisa.readthedocs.io/en/latest/"
+    },
+    {
+      "milestone_id": "MS-110-4",
+      "project_id": "PRJ-110",
+      "step_number": 4,
+      "title": "Compare to design",
+      "instructions": "Plot measured against expected values and explain any differences.",
+      "deliverable": "Characterization report",
+      "resource_title": "Matplotlib tutorials",
+      "resource_url": "https://matplotlib.org/stable/tutorials/index.html"
+    },
+    {
+      "milestone_id": "MS-111-1",
+      "project_id": "PRJ-111",
+      "step_number": 1,
+      "title": "Define the metrics",
+      "instructions": "Pick an app and define 5–7 KPIs (activation, retention, engagement) with exact formulas.",
+      "deliverable": "KPI definitions doc",
+      "resource_title": "Amplitude: Product metrics guide",
+      "resource_url": "https://amplitude.com/blog/product-metrics"
+    },
+    {
+      "milestone_id": "MS-111-2",
+      "project_id": "PRJ-111",
+      "step_number": 2,
+      "title": "Build the event data",
+      "instructions": "Load a public or synthetic event log into SQLite with users, sessions, and events tables.",
+      "deliverable": "Database and load script",
+      "resource_title": "SQLite documentation",
+      "resource_url": "https://www.sqlite.org/docs.html"
+    },
+    {
+      "milestone_id": "MS-111-3",
+      "project_id": "PRJ-111",
+      "step_number": 3,
+      "title": "Compute KPIs in SQL",
+      "instructions": "Write one query per KPI, including week-over-week retention cohorts.",
+      "deliverable": "Documented .sql file",
+      "resource_title": "PostgreSQL tutorial",
+      "resource_url": "https://www.postgresql.org/docs/current/tutorial.html"
+    },
+    {
+      "milestone_id": "MS-111-4",
+      "project_id": "PRJ-111",
+      "step_number": 4,
+      "title": "Report the week",
+      "instructions": "Chart the KPIs and write a short report on what moved and what to do next.",
+      "deliverable": "Weekly KPI report",
+      "resource_title": "Matplotlib tutorials",
+      "resource_url": "https://matplotlib.org/stable/tutorials/index.html"
+    },
+    {
+      "milestone_id": "MS-112-1",
+      "project_id": "PRJ-112",
+      "step_number": 1,
+      "title": "Pick a messy dataset",
+      "instructions": "Choose an openly licensed dataset with missing values, inconsistent formats, and duplicates.",
+      "deliverable": "Data profile summary",
+      "resource_title": "pandas: Getting started",
+      "resource_url": "https://pandas.pydata.org/docs/getting_started/index.html"
+    },
+    {
+      "milestone_id": "MS-112-2",
+      "project_id": "PRJ-112",
+      "step_number": 2,
+      "title": "Clean with an assistant",
+      "instructions": "Use an AI assistant to draft cleaning code, and record each prompt and suggestion.",
+      "deliverable": "Cleaning code and prompt log",
+      "resource_title": "GitHub Copilot documentation",
+      "resource_url": "https://docs.github.com/en/copilot"
+    },
+    {
+      "milestone_id": "MS-112-3",
+      "project_id": "PRJ-112",
+      "step_number": 3,
+      "title": "Verify everything",
+      "instructions": "Write checks (row counts, ranges, uniqueness) that prove the cleaned data is right.",
+      "deliverable": "Validation checks",
+      "resource_title": "pandas: Working with missing data",
+      "resource_url": "https://pandas.pydata.org/docs/user_guide/missing_data.html"
+    },
+    {
+      "milestone_id": "MS-112-4",
+      "project_id": "PRJ-112",
+      "step_number": 4,
+      "title": "Reflect",
+      "instructions": "Write up where the assistant saved time, where it was wrong, and how you caught it.",
+      "deliverable": "Reflection write-up",
+      "resource_title": "pandas: Getting started",
+      "resource_url": "https://pandas.pydata.org/docs/getting_started/index.html"
+    },
+    {
+      "milestone_id": "MS-113-1",
+      "project_id": "PRJ-113",
+      "step_number": 1,
+      "title": "Collect results",
+      "instructions": "Gather a few seasons of public game results and build features such as recent form and home advantage.",
+      "deliverable": "Feature table",
+      "resource_title": "pandas: Getting started",
+      "resource_url": "https://pandas.pydata.org/docs/getting_started/index.html"
+    },
+    {
+      "milestone_id": "MS-113-2",
+      "project_id": "PRJ-113",
+      "step_number": 2,
+      "title": "Start with statistics",
+      "instructions": "Fit a logistic regression and interpret what each coefficient means.",
+      "deliverable": "Baseline model",
+      "resource_title": "scikit-learn: Logistic regression",
+      "resource_url": "https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression"
+    },
+    {
+      "milestone_id": "MS-113-3",
+      "project_id": "PRJ-113",
+      "step_number": 3,
+      "title": "Try a better model",
+      "instructions": "Compare against a tree-based model using log loss on held-out seasons.",
+      "deliverable": "Model comparison",
+      "resource_title": "scikit-learn: Model evaluation",
+      "resource_url": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+    },
+    {
+      "milestone_id": "MS-113-4",
+      "project_id": "PRJ-113",
+      "step_number": 4,
+      "title": "Check calibration",
+      "instructions": "Plot predicted versus actual win rates and explain where the model is over- or under-confident.",
+      "deliverable": "Calibration chart and write-up",
+      "resource_title": "scikit-learn: Probability calibration",
+      "resource_url": "https://scikit-learn.org/stable/modules/calibration.html"
+    },
+    {
+      "milestone_id": "MS-114-1",
+      "project_id": "PRJ-114",
+      "step_number": 1,
+      "title": "Build the API locally",
+      "instructions": "Write a Node.js API to start, stop, and list study sessions.",
+      "deliverable": "Local API with tests",
+      "resource_title": "Node.js: Introduction",
+      "resource_url": "https://nodejs.org/en/learn/getting-started/introduction-to-nodejs"
+    },
+    {
+      "milestone_id": "MS-114-2",
+      "project_id": "PRJ-114",
+      "step_number": 2,
+      "title": "Learn the AWS pieces",
+      "instructions": "Set up a free-tier account and learn Lambda, API Gateway, and DynamoDB basics.",
+      "deliverable": "Notes on chosen services",
+      "resource_title": "AWS Free Tier",
+      "resource_url": "https://aws.amazon.com/free/"
+    },
+    {
+      "milestone_id": "MS-114-3",
+      "project_id": "PRJ-114",
+      "step_number": 3,
+      "title": "Deploy with code",
+      "instructions": "Describe the infrastructure in a template and deploy the API to AWS.",
+      "deliverable": "Infrastructure template and live endpoint",
+      "resource_title": "AWS Lambda developer guide",
+      "resource_url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+    },
+    {
+      "milestone_id": "MS-114-4",
+      "project_id": "PRJ-114",
+      "step_number": 4,
+      "title": "Document the architecture",
+      "instructions": "Draw how requests flow and note costs, limits, and how to tear it down.",
+      "deliverable": "Architecture diagram and README",
+      "resource_title": "AWS Well-Architected Framework",
+      "resource_url": "https://aws.amazon.com/architecture/well-architected/"
+    },
+    {
+      "milestone_id": "MS-115-1",
+      "project_id": "PRJ-115",
+      "step_number": 1,
+      "title": "Implement the algorithms",
+      "instructions": "Write sorting (merge, quick) and search (BFS, DFS) algorithms as plain functions with tests.",
+      "deliverable": "Algorithm module and tests",
+      "resource_title": "MDN: JavaScript guide",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+    },
+    {
+      "milestone_id": "MS-115-2",
+      "project_id": "PRJ-115",
+      "step_number": 2,
+      "title": "Record each step",
+      "instructions": "Have each algorithm emit the steps it takes so they can be replayed.",
+      "deliverable": "Step-recording functions",
+      "resource_title": "TypeScript handbook",
+      "resource_url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+    },
+    {
+      "milestone_id": "MS-115-3",
+      "project_id": "PRJ-115",
+      "step_number": 3,
+      "title": "Animate in React",
+      "instructions": "Build controls to play, pause, and step through each algorithm visually.",
+      "deliverable": "Interactive React app",
+      "resource_title": "React: Quick start",
+      "resource_url": "https://react.dev/learn"
+    },
+    {
+      "milestone_id": "MS-115-4",
+      "project_id": "PRJ-115",
+      "step_number": 4,
+      "title": "Explain complexity",
+      "instructions": "Add notes comparing best, average, and worst cases for each algorithm.",
+      "deliverable": "Complexity notes in the app",
+      "resource_title": "Khan Academy: Algorithms",
+      "resource_url": "https://www.khanacademy.org/computing/computer-science/algorithms"
+    }
+  ]
+}

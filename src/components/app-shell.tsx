@@ -5,15 +5,16 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Compass,
-  LayoutDashboard,
   FolderOpen,
   UserRound,
+  Target,
+  FileText,
   Menu,
   X,
 } from "lucide-react";
 import { navigation } from "@/lib/navigation";
 
-const icons = [Compass, LayoutDashboard, Compass, FolderOpen, UserRound];
+const icons = [Compass, Target, FileText, FolderOpen, UserRound];
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -22,8 +23,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const closeButton = useRef<HTMLButtonElement>(null);
   const parentPage = navigation.find(
     (item) =>
-      pathname === item.href ||
-      (item.href !== "/" && pathname.startsWith(`${item.href}/`)),
+      pathname === item.href || pathname.startsWith(`${item.href}/`),
   );
   const currentPage =
     pathname.startsWith("/career-insights/") ||
@@ -60,13 +60,13 @@ export function AppShell({ children }: { children: ReactNode }) {
     return (
       <div className="onboarding-shell">
         <header className="onboarding-topbar">
-          <Link href="/" className="brand">
+          <Link href="/career-insights" className="brand">
             BridgePath
             <span className="brand-mark" aria-hidden="true">
               ↗
             </span>
           </Link>
-          <span>{pathname === "/discover-opportunities" ? "Internship discovery" : "Student setup"}</span>
+          {pathname === "/discover-opportunities" && <span>Internship discovery</span>}
         </header>
         <main id="main-content" tabIndex={-1}>
           {children}
@@ -89,7 +89,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         className={`sidebar ${open ? "is-open" : ""}`}
         aria-label="Application sidebar"
       >
-        <Link href="/" className="brand" onClick={() => setOpen(false)}>
+        <Link href="/career-insights" className="brand" onClick={() => setOpen(false)}>
           BridgePath
           <span className="brand-mark" aria-hidden="true">
             ↗

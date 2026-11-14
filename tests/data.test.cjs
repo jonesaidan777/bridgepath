@@ -4,6 +4,14 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { createRequire } = require("node:module");
 const ts = require("typescript");
+// data.ts imports ./workbook (TypeScript), so compile .ts files on require too.
+require.extensions[".ts"] = (module, file) =>
+  module._compile(
+    ts.transpileModule(fs.readFileSync(file, "utf8"), {
+      compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true, target: ts.ScriptTarget.ES2017 },
+    }).outputText,
+    file,
+  );
 
 // Transpile the actual module with the project's existing TypeScript dependency.
 // Its only runtime import is the generated JSON; no test framework is needed.

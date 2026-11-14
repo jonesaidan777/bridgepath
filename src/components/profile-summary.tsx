@@ -11,7 +11,6 @@ const degreeLabels = {
   doctoral: "Doctoral",
   "": "Not provided",
 };
-const modeLabels = { remote: "Remote", hybrid: "Hybrid", on_site: "On-site" };
 const value = (text: string) => text.trim() || "Not provided";
 
 export function ProfileSummary({ profile }: { profile: StudentProfile }) {
@@ -152,17 +151,6 @@ export function ProfileSummary({ profile }: { profile: StudentProfile }) {
                       .join(", ")}
                   </p>
                 ) : null}
-                {experience.evidenceUrl &&
-                  validProfileUrl(experience.evidenceUrl) && (
-                    <a
-                      href={experience.evidenceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Evidence link
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    </a>
-                  )}
               </li>
             ))}
           </ul>
@@ -227,53 +215,8 @@ export function ProfileSummary({ profile }: { profile: StudentProfile }) {
         </p>
       </section>
       <section>
-        <h2>Internship preferences</h2>
-        <dl>
-          <div>
-            <dt>Target roles</dt>
-            <dd>
-              {profile.preferences.targetRoles.join(", ") || "Not provided"}
-            </dd>
-          </div>
-          <div>
-            <dt>Preferred locations</dt>
-            <dd>
-              {profile.preferences.locations.join(", ") ||
-                "Flexible / not provided"}
-            </dd>
-          </div>
-          <div>
-            <dt>Work arrangement</dt>
-            <dd>
-              {profile.preferences.workModes
-                .map((mode) => modeLabels[mode])
-                .join(", ") || "Not provided"}
-            </dd>
-          </div>
-          <div>
-            <dt>Relocation</dt>
-            <dd>
-              {profile.preferences.willingToRelocate === "yes"
-                ? "Willing to relocate"
-                : profile.preferences.willingToRelocate === "no"
-                  ? "Not willing to relocate"
-                  : profile.preferences.willingToRelocate === "unsure"
-                    ? "Unsure"
-                    : "Not provided"}
-            </dd>
-          </div>
-          <div>
-            <dt>Season / year</dt>
-            <dd>
-              {profile.preferences.season === "any"
-                ? "Any season"
-                : profile.preferences.season || "Season not provided"}{" "}
-              {profile.preferences.year}
-            </dd>
-          </div>
-        </dl>
+        <h2>Resume</h2>
         <p className="supporting-text">
-          Resume:{" "}
           {profile.resume.reviewedLocally
             ? "Reviewed locally; document not saved."
             : "Not provided."}{" "}
