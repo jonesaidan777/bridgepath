@@ -224,3 +224,24 @@ test("selection links encode IDs and use dedicated detail routes", () => {
   assert.equal(project.hash, "");
   assert.equal(api.researchHref(), "/career-insights");
 });
+
+test("shared-skill opportunity counts exclude the source and other fields and deduplicate mentions", () => {
+  for (const job of dataset.Internships) {
+    const ids = new Set(dataset.Requirements.filter(row => row.internship_id === job.internship_id).map(row => row.skill_id));
+    const result = api.getSharedSkillOpportunities(job.internship_id);
+    if (!job.career_field || !ids.size) { assert.equal(result, null); continue; }
+    const expected = dataset.Internships.filter(other => other.internship_id !== job.internship_id && other.career_field === job.career_field && dataset.Requirements.some(row => row.internship_id === other.internship_id && ids.has(row.skill_id)));
+    assert.deepEqual(result.map(row => row.internship.internship_id).sort(), expected.map(row => row.internship_id).sort());
+    for (const row of result) assert.equal(row.sharedSkills.length, new Set(row.sharedSkills.map(skill => skill.skill_id)).size);
+  }
+  const duplicate = clone(); duplicate.Requirements.push(...duplicate.Requirements);
+  const layer = api.createDataLayer(duplicate);
+  for (const job of dataset.Internships) assert.deepEqual(layer.getSharedSkillOpportunities(job.internship_id), api.getSharedSkillOpportunities(job.internship_id));
+});
+test("shared-skill comparisons handle missing records and missing data without invented counts", () => {
+  assert.equal(api.getSharedSkillOpportunities("missing"), null);
+  const d=clone(); d.Internships[0].career_field=null;
+  assert.equal(api.createDataLayer(d).getSharedSkillOpportunities(d.Internships[0].internship_id),null);
+  d.Internships[0].career_field="isolated-field";
+  assert.deepEqual(api.createDataLayer(d).getSharedSkillOpportunities(d.Internships[0].internship_id),[]);
+});

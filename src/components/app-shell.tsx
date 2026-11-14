@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { navigation } from "@/lib/navigation";
 
-const icons = [LayoutDashboard, Compass, FolderOpen, UserRound];
+const icons = [Compass, LayoutDashboard, Compass, FolderOpen, UserRound];
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -25,11 +25,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       pathname === item.href ||
       (item.href !== "/" && pathname.startsWith(`${item.href}/`)),
   );
-  const currentPage = pathname.startsWith("/career-insights/")
-    ? "Internship details"
-    : pathname.startsWith("/my-projects/")
-      ? "Project details"
-      : (parentPage?.label ?? "BridgePath");
+  const currentPage =
+    pathname.startsWith("/career-insights/") ||
+    pathname.startsWith("/my-opportunities/")
+      ? "Internship details"
+      : pathname.startsWith("/my-projects/")
+        ? "Project details"
+        : (parentPage?.label ?? "BridgePath");
 
   function closeMenu() {
     setOpen(false);
@@ -53,6 +55,25 @@ export function AppShell({ children }: { children: ReactNode }) {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
+
+  if (pathname === "/onboarding" || pathname === "/discover-opportunities") {
+    return (
+      <div className="onboarding-shell">
+        <header className="onboarding-topbar">
+          <Link href="/" className="brand">
+            BridgePath
+            <span className="brand-mark" aria-hidden="true">
+              ↗
+            </span>
+          </Link>
+          <span>{pathname === "/discover-opportunities" ? "Internship discovery" : "Student setup"}</span>
+        </header>
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="app-shell">
@@ -136,7 +157,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
         <footer>
           <span>BridgePath</span>
-          <span>From opportunity to experience.</span>
+          <span>From potential to proof.</span>
         </footer>
       </div>
     </div>

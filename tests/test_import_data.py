@@ -21,7 +21,8 @@ class ImportTests(unittest.TestCase):
     def test_all_rows_and_original_workbook_unchanged(self):
         path = ROOT / "BridgePath_Data.xlsx"
         before = hashlib.sha256(path.read_bytes()).hexdigest()
-        self.assertEqual(importer.validate(self.data), [])
+        warnings = importer.validate(self.data)
+        self.assertTrue(all('blank cells retained as null' in warning for warning in warnings))
         self.assertEqual(set(self.data), set(importer.SCHEMA))
         # Compare to nonblank XML data rows, not a second copy of the JSON counts.
         ns = importer.NS

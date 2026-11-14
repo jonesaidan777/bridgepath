@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PersonalizedProjectContext } from "./project-recommendations";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import {
   display,
@@ -16,9 +17,11 @@ import type { Project } from "@/lib/workbook-types";
 export function ProjectDetails({
   project,
   activeMilestoneId,
+  internshipId,
 }: {
   project: Project;
   activeMilestoneId?: string;
+  internshipId?: string;
 }) {
   const skills = getProjectSkills(project);
   const milestones = getMilestones(project.project_id);
@@ -41,13 +44,14 @@ export function ProjectDetails({
         <h1>{display(project.title)}</h1>
         <p>{display(project.description)}</p>
       </header>
+      <p className="match-category">{milestones.length ? "Guided workbook project" : "Workbook brief · not guided"}</p>
       <section className="project-outcome">
         <h2>What you’ll produce</h2>
         <p>{display(project.final_deliverable)}</p>
       </section>
       {first ? (
         <Link
-          href={`${projectHref(project.project_id)}?${new URLSearchParams({ step: first.milestone_id })}#guided-path`}
+          href={`${projectHref(project.project_id)}?${new URLSearchParams({ step: first.milestone_id, ...(internshipId ? { internship: internshipId } : {}) })}#guided-path`}
           className="button"
         >
           Start the guided project
@@ -55,11 +59,16 @@ export function ProjectDetails({
         </Link>
       ) : (
         <div className="unguided-note">
-          <h2>Guided path coming soon</h2>
+          <h2>Workbook brief · no guided steps</h2>
           <p>
             The project brief is available, but no milestones or learning
             resources are recorded yet.
           </p>
+          <Link href="/onboarding?edit=1&step=4" className="button">
+            Add this brief to your profile
+            <ArrowRight size={18} />
+          </Link>
+          <p className="supporting-text">Add a planned project entry manually; no work is marked complete.</p>
         </div>
       )}
       {milestones.length > 0 && (
@@ -132,6 +141,7 @@ export function ProjectDetails({
           </ol>
         </section>
       )}
+      <PersonalizedProjectContext projectId={project.project_id} internshipId={internshipId} />
       <div className="secondary-information">
         <details className="disclosure">
           <summary>Skills you’ll practice</summary>

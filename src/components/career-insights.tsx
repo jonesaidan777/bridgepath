@@ -1,3 +1,4 @@
+import { careerFieldLabel } from "@/lib/profile-options";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
@@ -34,7 +35,9 @@ export function CareerInsights({
           >
             <option value="">All fields</option>
             {fields.map((field) => (
-              <option key={field}>{field}</option>
+              <option value={field} key={field}>
+                {careerFieldLabel(field)}
+              </option>
             ))}
           </select>
           <button className="text-button" type="submit">

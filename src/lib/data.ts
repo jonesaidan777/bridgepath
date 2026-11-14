@@ -185,6 +185,23 @@ export function createDataLayer(data: WorkbookDataset) {
       invalidInternship: Boolean(query.internshipId && !selectedInternship),
     };
   }
+  /** Count distinct other postings sharing at least one canonical skill in the same field. */
+  function getSharedSkillOpportunities(internshipId: string) {
+    const selected = data.Internships.find(job => job.internship_id === internshipId);
+    if (!selected?.career_field) return null;
+    const requested = new Set(getRequirements(internshipId).map(row => row.skill_id));
+    if (!requested.size) return null;
+    return getInternships(selected.career_field)
+      .filter(job => job.internship_id !== internshipId)
+      .map(internship => ({
+        internship,
+        sharedSkills: [...new Set(getRequirements(internship.internship_id)
+          .map(row => row.skill_id).filter(id => requested.has(id)))]
+          .map(id => getSkill(id)).filter((skill): skill is NonNullable<typeof skill> => Boolean(skill)),
+      }))
+      .filter(row => row.sharedSkills.length > 0)
+      .sort((a, b) => b.sharedSkills.length - a.sharedSkills.length || a.internship.internship_id.localeCompare(b.internship.internship_id));
+  }
   function getProjectsForInternship(internshipId: string) {
     return data.Projects.filter((project) =>
       getRequirementsForProject(project.project_id).some(
@@ -208,6 +225,7 @@ export function createDataLayer(data: WorkbookDataset) {
     getMilestones,
     getExplorerState,
     getProjectsForInternship,
+    getSharedSkillOpportunities,
   };
 }
 
@@ -227,6 +245,7 @@ export const {
   getMilestones,
   getExplorerState,
   getProjectsForInternship,
+  getSharedSkillOpportunities,
 } = createDataLayer(snapshot as WorkbookDataset);
 
 /** Retain source text, but only make ordinary web URLs clickable. */

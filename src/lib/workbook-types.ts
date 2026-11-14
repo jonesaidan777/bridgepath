@@ -9,6 +9,14 @@ export interface Internship {
   employer_posting_url: string | null;
   retrieved_on: string | null;
   posting_status: string | null;
+  overview?: string | null;
+  responsibilities?: string | null;
+  requirements?: string | null;
+  preferred?: string | null;
+  program_details?: string | null;
+  what_we_offer?: string | null;
+  about_company?: string | null;
+  application_notes?: string | null;
 }
 export type RequirementType = "required" | "preferred" | "unspecified";
 export interface Requirement {

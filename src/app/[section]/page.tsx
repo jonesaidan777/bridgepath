@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { MyOpportunities } from "@/components/my-opportunities";
 import { CareerInsights } from "@/components/career-insights";
 import { WorkbookProjects } from "@/components/workbook-projects";
 import { researchHref, projectHref } from "@/lib/data";
+import { StudentProfilePage } from "@/components/profile-page";
 import { navigation } from "@/lib/navigation";
 
-// Keep the existing routes; only Profile remains a placeholder.
+// Preserve the research routes while Profile becomes a browser-local student view.
 export function generateStaticParams() {
   return navigation
     .filter((item) => item.href !== "/")
@@ -23,6 +25,8 @@ export default async function PlaceholderPage({
   const { section } = await params;
   const item = navigation.find((item) => item.href === `/${section}`);
   if (!item) notFound();
+  if (section === "my-opportunities") return <MyOpportunities />;
+  if (section === "profile") return <StudentProfilePage />;
   if (section === "career-insights" || section === "my-projects") {
     const query = await searchParams;
     const value = (key: string) =>

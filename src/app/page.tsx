@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { StudentWelcome } from "@/components/student-welcome";
 import { display, getInternships, researchHref } from "@/lib/data";
 
 export default function Dashboard() {
@@ -15,21 +16,7 @@ export default function Dashboard() {
     .slice(0, 2);
   return (
     <div className="page-content dashboard-page">
-      <header className="page-heading">
-        <h1>
-          Discover the opportunity.
-          <br />
-          <em>Build the experience.</em>
-        </h1>
-        <p>
-          Understand what employers ask for, then explore practical projects
-          that help you build those skills.
-        </p>
-        <Link href="/career-insights" className="button">
-          Explore career opportunities
-          <ArrowRight size={20} />
-        </Link>
-      </header>
+      <StudentWelcome />
       <section
         className="opportunity-preview"
         aria-labelledby="preview-heading"
