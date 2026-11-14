@@ -15,6 +15,7 @@ import { buildReadiness, gradeCandidate } from "@/lib/readiness";
 import { projectDisplayTitle, recommendProjects, type ProjectRecommendation } from "@/lib/project-recommendations";
 import { estimateJobs, formatJobCount } from "@/lib/job-estimates";
 import { learningLinks } from "@/lib/learning-resources";
+import { transferableSkills } from "@/lib/transferable-skills";
 import { display } from "@/lib/data";
 import { careerFieldLabel as careerFieldName } from "@/lib/profile-options";
 import { workbook as snapshot } from "@/lib/workbook";
@@ -82,28 +83,6 @@ function hiddenTips(readiness: ReturnType<typeof buildReadiness>, college: strin
     action: { label: "Find a hackathon", kind: "external", href: "https://mlh.io/" },
   });
   return tips;
-}
-
-/** Transferable strengths implied by an experience, from its type and wording. */
-function transferableSkills(row: { kind: string; title: string; description: string; accomplishments?: string }) {
-  const text = `${row.title} ${row.description} ${row.accomplishments ?? ""}`.toLowerCase();
-  const found = new Set<string>({
-    internship: ["Professional experience"],
-    work: ["Reliability", "Communication"],
-    research: ["Research", "Analysis"],
-    extracurricular: ["Teamwork"],
-  }[row.kind] ?? []);
-  const cues: [RegExp, string][] = [
-    [/help|assist|support|customer|front desk|student/, "Helping people"],
-    [/team|club|group|collaborat/, "Teamwork"],
-    [/lead|manag|organiz|coordinat/, "Organization"],
-    [/track|sheet|excel|data|record/, "Working with data"],
-    [/explain|present|teach|tutor/, "Explaining ideas"],
-    [/check|valid|test|accura/, "Attention to detail"],
-    [/solve|fix|troubleshoot|diagnos/, "Problem solving"],
-  ];
-  for (const [pattern, label] of cues) if (pattern.test(text)) found.add(label);
-  return [...found];
 }
 
 export function CandidateReadiness() {

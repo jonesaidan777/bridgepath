@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getInternships, getProjects } from "@/lib/data";
-import { PersonalizedRole } from "@/components/personalized-role";
+import { RoleDetailPage } from "@/components/role-detail-page";
 import { ProjectConceptDetails } from "@/components/project-recommendations";
 import { ProjectDetails } from "@/components/project-details";
 
@@ -18,13 +18,8 @@ export default async function DetailPage({
   if (section === "career-insights" || section === "my-opportunities") {
     const internship = getInternships().find((job) => job.internship_id === id);
     if (!internship) notFound();
-    return (
-      <PersonalizedRole
-        internshipId={internship.internship_id}
-        reviewRequirements={value("review") === "requirements"}
-        backTo="/career-insights"
-      />
-    );
+    // Same job details as the Where you stand popup.
+    return <RoleDetailPage internshipId={internship.internship_id} />;
   }
   if (section === "my-projects") {
     if (id.startsWith("concept-")) {
